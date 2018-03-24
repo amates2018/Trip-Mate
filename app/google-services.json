@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "668233121245",
+    "firebase_url": "https://trip-aid.firebaseio.com",
+    "project_id": "trip-aid",
+    "storage_bucket": "trip-aid.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:668233121245:android:f4e550abc080a9fe",
+        "android_client_info": {
+          "package_name": "io.tripmate"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "668233121245-d4bea42266rkto3ci2k51srktf3qqnad.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "io.tripmate",
+            "certificate_hash": "2da3d3c1c2cf91b5f73c8e4bdab02e7e627e1f1a"
+          }
+        },
+        {
+          "client_id": "668233121245-j793pobip516pgfs9r3vfp3in58u923o.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA6wHo6VAVbULjTbbyZkS3L9P7YUztIFCw"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "668233121245-j793pobip516pgfs9r3vfp3in58u923o.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

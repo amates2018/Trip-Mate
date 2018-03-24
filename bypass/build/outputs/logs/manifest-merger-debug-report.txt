@@ -1,0 +1,41 @@
+-- Merging decision tree log ---
+manifest
+ADDED from E:\PROJECT\ANDROID\PERSONAL\trip-mate\bypass\src\main\AndroidManifest.xml:6:1-10:12
+INJECTED from E:\PROJECT\ANDROID\PERSONAL\trip-mate\bypass\src\main\AndroidManifest.xml:6:1-10:12
+INJECTED from E:\PROJECT\ANDROID\PERSONAL\trip-mate\bypass\src\main\AndroidManifest.xml:6:1-10:12
+INJECTED from E:\PROJECT\ANDROID\PERSONAL\trip-mate\bypass\src\main\AndroidManifest.xml:6:1-10:12
+INJECTED from E:\PROJECT\ANDROID\PERSONAL\trip-mate\bypass\src\main\AndroidManifest.xml:6:1-10:12
+INJECTED from E:\PROJECT\ANDROID\PERSONAL\trip-mate\bypass\src\main\AndroidManifest.xml:6:1-10:12
+INJECTED from E:\PROJECT\ANDROID\PERSONAL\trip-mate\bypass\src\main\AndroidManifest.xml:6:1-10:12
+	package
+		ADDED from E:\PROJECT\ANDROID\PERSONAL\trip-mate\bypass\src\main\AndroidManifest.xml:7:2-35
+		INJECTED from E:\PROJECT\ANDROID\PERSONAL\trip-mate\bypass\src\main\AndroidManifest.xml
+		INJECTED from E:\PROJECT\ANDROID\PERSONAL\trip-mate\bypass\src\main\AndroidManifest.xml
+	android:versionName
+		INJECTED from E:\PROJECT\ANDROID\PERSONAL\trip-mate\bypass\src\main\AndroidManifest.xml
+		ADDED from E:\PROJECT\ANDROID\PERSONAL\trip-mate\bypass\src\main\AndroidManifest.xml:6:1-10:12
+		INJECTED from E:\PROJECT\ANDROID\PERSONAL\trip-mate\bypass\src\main\AndroidManifest.xml
+	android:versionCode
+		INJECTED from E:\PROJECT\ANDROID\PERSONAL\trip-mate\bypass\src\main\AndroidManifest.xml
+		ADDED from E:\PROJECT\ANDROID\PERSONAL\trip-mate\bypass\src\main\AndroidManifest.xml:6:1-10:12
+		INJECTED from E:\PROJECT\ANDROID\PERSONAL\trip-mate\bypass\src\main\AndroidManifest.xml
+	xmlns:android
+		ADDED from E:\PROJECT\ANDROID\PERSONAL\trip-mate\bypass\src\main\AndroidManifest.xml:6:11-69
+application
+ADDED from E:\PROJECT\ANDROID\PERSONAL\trip-mate\bypass\src\main\AndroidManifest.xml:9:2-50
+	android:label
+		ADDED from E:\PROJECT\ANDROID\PERSONAL\trip-mate\bypass\src\main\AndroidManifest.xml:9:15-47
+uses-sdk
+INJECTED from E:\PROJECT\ANDROID\PERSONAL\trip-mate\bypass\src\main\AndroidManifest.xml reason: use-sdk injection requested
+INJECTED from E:\PROJECT\ANDROID\PERSONAL\trip-mate\bypass\src\main\AndroidManifest.xml
+INJECTED from E:\PROJECT\ANDROID\PERSONAL\trip-mate\bypass\src\main\AndroidManifest.xml
+INJECTED from E:\PROJECT\ANDROID\PERSONAL\trip-mate\bypass\src\main\AndroidManifest.xml
+INJECTED from E:\PROJECT\ANDROID\PERSONAL\trip-mate\bypass\src\main\AndroidManifest.xml
+	android:targetSdkVersion
+		INJECTED from E:\PROJECT\ANDROID\PERSONAL\trip-mate\bypass\src\main\AndroidManifest.xml
+		ADDED from E:\PROJECT\ANDROID\PERSONAL\trip-mate\bypass\src\main\AndroidManifest.xml
+		INJECTED from E:\PROJECT\ANDROID\PERSONAL\trip-mate\bypass\src\main\AndroidManifest.xml
+	android:minSdkVersion
+		INJECTED from E:\PROJECT\ANDROID\PERSONAL\trip-mate\bypass\src\main\AndroidManifest.xml
+		ADDED from E:\PROJECT\ANDROID\PERSONAL\trip-mate\bypass\src\main\AndroidManifest.xml
+		INJECTED from E:\PROJECT\ANDROID\PERSONAL\trip-mate\bypass\src\main\AndroidManifest.xml
