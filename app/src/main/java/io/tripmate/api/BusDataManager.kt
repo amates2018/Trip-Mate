@@ -35,7 +35,6 @@ abstract class BusDataManager(private val activity: Activity)
         inflight.add(query)
         query.addOnCompleteListener(activity, { task ->
             if (task.isSuccessful) {
-                loadFinished()
                 val bus = task.result.toObject(Bus::class.java)
                 loadFinished()
                 onDataLoaded(bus)

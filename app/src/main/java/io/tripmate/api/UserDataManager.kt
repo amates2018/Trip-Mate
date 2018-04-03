@@ -7,9 +7,9 @@ import com.google.firebase.firestore.FirebaseFirestore
 import io.peanutsdk.recyclerview.BaseDataManager
 import io.tripmate.data.Driver
 import io.tripmate.data.Passenger
-import io.tripmate.data.User
 import io.tripmate.util.TripMatePrefs
 import io.tripmate.util.TripMateUtils
+import io.tripmate.util.User
 
 /**
  * Data manager for loading [User] instance from the database
@@ -31,27 +31,34 @@ abstract class UserDataManager(private val activity: Activity)
      */
     fun loadCurrentUser(key: String) {
         loadStarted()
-        val query = db.collection(TripMateUtils.USER_REF)
-                .document(key)
-                .get()
-        inflight.add(query)
-        query.addOnCompleteListener(activity, { task ->
-            if (task.isSuccessful) {
-                val user = task.result.toObject(User::class.java)
+        if (key.isNotEmpty()) {
+            val query = db.collection(TripMateUtils.USER_REF)
+                    .document(key)
+                    .get()
+            inflight.add(query)
+            query.addOnCompleteListener(activity, { task ->
+                if (task.isSuccessful) {
+                    val doc = task.result
+                    if (doc.exists()) {
+                        val data = doc.data
+                        //Check user type and return appropriate result
+                        if (data.containsKey("payment")) {
+                            val passenger = doc.toObject(Passenger::class.java)
+                            onDataLoaded(passenger)
+                        } else {
+                            val driver = doc.toObject(Driver::class.java)
+                            onDataLoaded(driver)
+                        }
 
-                //Check user type and return appropriate result
-                if (user is Passenger) {
-                    onDataLoaded(user)
+                        endProcess(query)
+                    }
                 } else {
-                    onDataLoaded(user as Driver)
+                    endProcess(query)
                 }
+            }).addOnFailureListener(activity, { _ ->
                 endProcess(query)
-            } else {
-               endProcess(query)
-            }
-        }).addOnFailureListener(activity, { _ ->
-            endProcess(query)
-        })
+            })
+        }
     }
 
     private fun endProcess(query: Task<DocumentSnapshot>) {

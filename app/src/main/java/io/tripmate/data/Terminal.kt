@@ -34,6 +34,10 @@ class Terminal : Parcelable {
         return 0
     }
 
+    override fun toString(): String {
+        return "Terminal(key=$key, location=$location, drivers=$drivers)"
+    }
+
     companion object CREATOR : Parcelable.Creator<Terminal> {
         override fun createFromParcel(parcel: Parcel): Terminal {
             return Terminal(parcel)

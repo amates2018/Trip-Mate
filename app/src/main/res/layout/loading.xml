@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ProgressBar xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:tools="http://schemas.android.com/tools"
+	android:id="@+id/loading"
+	android:layout_width="match_parent"
+	android:layout_height="wrap_content"
+	android:indeterminate="true"
+	android:indeterminateTint="@color/mid_grey"
+	android:indeterminateTintMode="src_in"
+	tools:showIn="@layout/content_home"
+	android:padding="@dimen/padding_dialog" />

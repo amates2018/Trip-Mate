@@ -1,9 +1,109 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
 	xmlns:app="http://schemas.android.com/apk/res-auto"
 	xmlns:tools="http://schemas.android.com/tools"
+	android:id="@+id/container"
 	android:layout_width="match_parent"
 	android:layout_height="match_parent"
+	android:background="@color/background_light"
+	android:orientation="vertical"
 	tools:context="io.tripmate.ui.SeatsActivity">
+	
+	<android.support.constraint.ConstraintLayout
+		android:id="@+id/layout_header"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:background="@color/accent"
+		android:padding="@dimen/padding_normal">
+		
+		<io.peanutsdk.widget.BaselineGridTextView
+			android:id="@+id/bus_name"
+			style="@style/TextAppearance.DribbbleShotDescription"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:textColor="@color/text_primary_light"
+			android:textSize="22sp"
+			app:fontFamily="@font/nunito_semibold"
+			app:layout_constraintStart_toStartOf="parent"
+			app:layout_constraintTop_toTopOf="parent"
+			android:text="Asian Express" />
+		
+		<io.peanutsdk.widget.BaselineGridTextView
+			android:id="@+id/trip_details"
+			style="@style/TextAppearance.DribbbleShotDescription"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:textColor="@color/text_secondary_light"
+			android:textSize="14sp"
+			app:fontFamily="@font/nunito_semibold"
+			app:layout_constraintStart_toStartOf="parent"
+			app:layout_constraintTop_toBottomOf="@id/bus_name"
+			android:text="Kumasi - Accra" />
+		
+		<io.peanutsdk.widget.BaselineGridTextView
+			android:id="@+id/booking_date"
+			style="@style/TextAppearance.DribbbleShotDescription"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:textColor="@color/text_secondary_light"
+			android:textSize="14sp"
+			app:fontFamily="@font/nunito_semibold"
+			app:layout_constraintStart_toStartOf="parent"
+			app:layout_constraintTop_toBottomOf="@id/trip_details"
+			android:text="Booking Date: 08-11-2018" />
+		
+		<io.peanutsdk.widget.BaselineGridTextView
+			android:id="@+id/trip_price"
+			style="@style/TextAppearance.DribbbleShotDescription"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:textColor="@color/text_primary_light"
+			android:textSize="22sp"
+			android:textStyle="bold"
+			app:layout_constraintEnd_toEndOf="parent"
+			app:layout_constraintTop_toTopOf="parent"
+			android:text="GHC 90.00"
+			android:layout_marginBottom="@dimen/padding_normal"/>
+	
+	</android.support.constraint.ConstraintLayout>
+	
+	
+	<LinearLayout
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:gravity="center_horizontal"
+		android:orientation="horizontal"
+		android:padding="@dimen/padding_normal">
+		
+		<io.peanutsdk.widget.BaselineGridTextView
+			style="@style/TextAppearance.DribbbleShotDescription"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_marginEnd="@dimen/padding_normal"
+			android:drawablePadding="@dimen/padding_normal"
+			android:drawableStart="@drawable/seat_normal"
+			android:text="@string/available"
+			android:textColor="@color/text_secondary_dark"
+			app:fontFamily="@font/nunito_semibold" />
+		
+		<io.peanutsdk.widget.BaselineGridTextView
+			style="@style/TextAppearance.DribbbleShotDescription"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_marginStart="@dimen/padding_normal"
+			android:drawablePadding="@dimen/padding_normal"
+			android:drawableStart="@drawable/seat_normal_selected"
+			android:text="@string/booked"
+			android:textColor="@color/text_secondary_dark"
+			app:fontFamily="@font/nunito_semibold" />
+	
+	</LinearLayout>
+	
+	<android.support.v7.widget.RecyclerView
+		android:id="@+id/seats_grid"
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		android:scrollbarStyle="outsideOverlay"
+		android:scrollbars="vertical" />
 
-</android.support.constraint.ConstraintLayout>
+</LinearLayout>

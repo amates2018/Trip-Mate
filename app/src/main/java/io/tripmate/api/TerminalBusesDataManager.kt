@@ -31,14 +31,15 @@ abstract class TerminalBusesDataManager(private val activity: Activity)
         val query = db.collection(TripMateUtils.BUS_REF)
                 .whereEqualTo("terminalKey", terminalKey)
         inflight.add(query)
+        val buses: MutableList<Bus> = ArrayList(0)
         query.addSnapshotListener(activity, { querySnapshot, exception ->
             if (exception != null) {
-                endProcess(query)
+                endProcess(query, buses)
                 return@addSnapshotListener
             }
 
             if (querySnapshot != null && !querySnapshot.isEmpty) {
-                val buses: MutableList<Bus> = ArrayList(0)
+
                 for (doc in querySnapshot.documents) {
                     if (doc.exists()) {
                         val bus = doc.toObject(Bus::class.java)
@@ -46,14 +47,14 @@ abstract class TerminalBusesDataManager(private val activity: Activity)
                     }
                 }
 
-                loadFinished()
-                onDataLoaded(buses)
-            } else endProcess(query)
+                endProcess(query, buses)
+            } else endProcess(query, buses)
         })
     }
 
-    private fun endProcess(query: Query) {
+    private fun endProcess(query: Query, buses: MutableList<Bus>) {
         loadFinished()
+        onDataLoaded(buses)
         inflight.remove(query)
     }
 

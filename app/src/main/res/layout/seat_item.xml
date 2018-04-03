@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<io.peanutsdk.widget.ForegroundRelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:tools="http://schemas.android.com/tools"
+	android:layout_width="match_parent"
+	android:layout_height="wrap_content"
+	android:padding="@dimen/spacing_normal">
+	
+	<ImageView
+		android:id="@+id/img_seat"
+		android:layout_width="40dp"
+		android:layout_height="40dp"
+		android:layout_centerHorizontal="true"
+		android:src="@drawable/seat_normal"
+		tools:ignore="ContentDescription" />
+	
+	<ImageView
+		android:id="@+id/img_seat_selected"
+		android:layout_width="40dp"
+		android:layout_height="40dp"
+		android:layout_centerHorizontal="true"
+		android:src="@drawable/seat_normal_selected"
+		android:visibility="invisible"
+		tools:ignore="ContentDescription" />
+
+</io.peanutsdk.widget.ForegroundRelativeLayout>

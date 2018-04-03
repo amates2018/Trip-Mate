@@ -8,7 +8,7 @@ import java.util.*
 /**
  * Passenger's ticket data model
  */
-class Ticket : SearchableItem, Parcelable {
+class Ticket : SearchableItem {
     override var key: String? = null
     override var origin: String? = null
     override var destination: String? = null
@@ -51,6 +51,34 @@ class Ticket : SearchableItem, Parcelable {
         return 0
     }
 
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (other !is Ticket) return false
+
+        if (key != other.key) return false
+        if (origin != other.origin) return false
+        if (destination != other.destination) return false
+        if (terminalKey != other.terminalKey) return false
+        if (passengerKey != other.passengerKey) return false
+        if (timestamp != other.timestamp) return false
+
+        return true
+    }
+
+    override fun hashCode(): Int {
+        var result = key?.hashCode() ?: 0
+        result = 31 * result + (origin?.hashCode() ?: 0)
+        result = 31 * result + (destination?.hashCode() ?: 0)
+        result = 31 * result + (terminalKey?.hashCode() ?: 0)
+        result = 31 * result + (passengerKey?.hashCode() ?: 0)
+        result = 31 * result + (timestamp?.hashCode() ?: 0)
+        return result
+    }
+
+    override fun toString(): String {
+        return "Ticket(key=$key, origin=$origin, destination=$destination, terminalKey=$terminalKey, passengerKey=$passengerKey, timestamp=$timestamp)"
+    }
+
     companion object CREATOR : Parcelable.Creator<Ticket> {
         override fun createFromParcel(parcel: Parcel): Ticket {
             return Ticket(parcel)
@@ -60,4 +88,6 @@ class Ticket : SearchableItem, Parcelable {
             return arrayOfNulls(size)
         }
     }
+
+
 }

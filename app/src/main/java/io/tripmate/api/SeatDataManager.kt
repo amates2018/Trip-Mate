@@ -31,14 +31,14 @@ abstract class SeatDataManager(private val activity: Activity)
         val query = db.collection(TripMateUtils.SEAT_REF)
                 .whereEqualTo("busKey", busKey)
         inflight.add(query)
+        val seats: MutableList<Seat> = ArrayList(0)
         query.addSnapshotListener(activity, { querySnapshot, exception ->
             if (exception != null) {
-                endProcess(query)
+                endProcess(query, seats)
                 return@addSnapshotListener
             }
 
             if (querySnapshot != null && !querySnapshot.isEmpty) {
-                val seats: MutableList<Seat> = ArrayList(0)
                 for (doc in querySnapshot.documents) {
                     if (doc.exists()) {
                         val seat = doc.toObject(Seat::class.java)
@@ -46,14 +46,14 @@ abstract class SeatDataManager(private val activity: Activity)
                     }
                 }
 
-                loadFinished()
-                onDataLoaded(seats)
-            } else endProcess(query)
+
+            } else endProcess(query,seats)
         })
     }
 
-    private fun endProcess(query: Query) {
+    private fun endProcess(query: Query, seats: MutableList<Seat>) {
         loadFinished()
+        onDataLoaded(seats)
         inflight.remove(query)
     }
 

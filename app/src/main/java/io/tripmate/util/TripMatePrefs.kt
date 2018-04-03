@@ -3,19 +3,17 @@ package io.tripmate.util
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.SharedPreferences
-import com.afollestad.materialdialogs.MaterialDialog
-import com.afollestad.materialdialogs.Theme
+import android.net.ConnectivityManager
 import com.google.firebase.FirebaseApp
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.FirebaseFirestoreSettings
 import com.google.firebase.storage.FirebaseStorage
-import io.tripmate.R
 
 /**
  * Trip Mate shared preferences
  */
-class TripMatePrefs private constructor(context: Context) {
+class TripMatePrefs private constructor(private val context: Context) {
     private var prefs: SharedPreferences = context.getSharedPreferences(TripMateUtils.TRIP_MATE_PREFS, Context.MODE_PRIVATE)
     var auth: FirebaseAuth
     var db: FirebaseFirestore
@@ -23,10 +21,11 @@ class TripMatePrefs private constructor(context: Context) {
 
     private var accessToken: String? = null
     private var userType: String? = null
-    private var loading: MaterialDialog
     private var loginStateListeners: MutableList<LoginStateListener>? = null
 
     var isLoggedIn = false
+        private set
+    var isConnected = false
         private set
 
     init {
@@ -53,34 +52,36 @@ class TripMatePrefs private constructor(context: Context) {
         isLoggedIn = !accessToken.isNullOrEmpty()
         if (isLoggedIn) {
             accessToken = prefs.getString(KEY_ACCESS_TOKEN, null)
+            userType = prefs.getString(KEY_USER_TYPE, null)
         }
 
-        //Setup Material Dialog
-        loading = MaterialDialog.Builder(context)
-                .theme(Theme.DARK)
-                .progress(true, 0)
-                .content(context.getString(R.string.loading))
-                .canceledOnTouchOutside(false)
-                .build()
+        isConnected = getConnectionState()
+    }
+
+    private fun getConnectionState(): Boolean {
+        val connectivityManager = context.getSystemService(Context.CONNECTIVITY_SERVICE) as? ConnectivityManager
+        val networkInfo = connectivityManager?.activeNetworkInfo
+        return networkInfo != null && networkInfo.isConnectedOrConnecting
     }
 
     /**
      * Set logged in user's access token
      */
-    fun setAccessToken(token: String?) {
+    fun setAccessToken(token: String?, userType: UserType) {
         if (token.isNullOrEmpty()) return
-        accessToken = token
+        this.accessToken = token
+        this.userType = userType.name
         isLoggedIn = true
         //Store locally
-        prefs.edit().putString(KEY_ACCESS_TOKEN, accessToken).apply()
+        val editor = prefs.edit()
+        editor.putString(KEY_ACCESS_TOKEN, accessToken).apply()
+        editor.putString(KEY_USER_TYPE, userType.name).apply()
+        editor.apply()
         dispatchLoginEvent()
     }
 
-    fun getAccessToken(): String? {
-        if (isLoggedIn) {
-            return prefs.getString(KEY_ACCESS_TOKEN, null)
-        }
-        return null
+    fun getAccessToken(): String {
+        return prefs.getString(KEY_ACCESS_TOKEN, null)
     }
 
     /**
@@ -92,7 +93,11 @@ class TripMatePrefs private constructor(context: Context) {
 
             isLoggedIn = false
             accessToken = null
-            prefs.edit().putString(KEY_ACCESS_TOKEN, accessToken).apply()
+            userType = null
+            val editor = prefs.edit()
+            editor.putString(KEY_ACCESS_TOKEN, accessToken)
+            editor.putString(KEY_USER_TYPE, userType)
+            editor.apply()
             dispatchLogoutEvent()
         }
     }
@@ -131,15 +136,9 @@ class TripMatePrefs private constructor(context: Context) {
         }
     }
 
-    /**
-     * Returns the Material Dialog
-     */
-    fun getDialog(): MaterialDialog {
-        return loading
-    }
-
     companion object {
         private const val KEY_ACCESS_TOKEN = "KEY_ACCESS_TOKEN"
+        private const val KEY_USER_TYPE = "KEY_USER_TYPE"
 
         @SuppressLint("StaticFieldLeak")
         @Volatile

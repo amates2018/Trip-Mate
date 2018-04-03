@@ -1,5 +1,10 @@
 package io.tripmate.util
 
+import android.content.Context
+import com.afollestad.materialdialogs.MaterialDialog
+import com.afollestad.materialdialogs.Theme
+import io.tripmate.R
+
 /**
  * Utils for constants and static variables
  */
@@ -14,4 +19,13 @@ object TripMateUtils {
 
     //Shared preferences
     const val TRIP_MATE_PREFS = "TRIP_MATE_PREFS"
+
+    fun getDialog(context: Context): MaterialDialog {
+        return MaterialDialog.Builder(context)
+                .theme(Theme.DARK)
+                .progress(true, 0)
+                .content(context.getString(R.string.loading))
+                .canceledOnTouchOutside(false)
+                .build()
+    }
 }

@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	xmlns:tools="http://schemas.android.com/tools"
+	android:layout_width="match_parent"
+	android:layout_height="wrap_content"
+	android:background="@color/background_light"
+	android:padding="@dimen/spacing_normal">
+	
+	<io.peanutsdk.widget.CircularImageView
+		android:id="@+id/bus_photo"
+		android:layout_width="@dimen/avatar_bounds"
+		android:layout_height="@dimen/avatar_bounds"
+		android:src="@drawable/avatar_placeholder"
+		android:transitionName="image"
+		app:layout_constraintBottom_toBottomOf="parent"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toTopOf="parent" />
+	
+	<io.peanutsdk.widget.BaselineGridTextView
+		android:id="@+id/bus_name"
+		style="@style/TextAppearance.DribbbleShotDescription"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_marginEnd="@dimen/padding_room_for_fab"
+		android:layout_marginStart="@dimen/padding_normal"
+		android:textColor="@color/text_primary_dark"
+		android:textSize="18sp"
+		app:fontFamily="@font/nunito_semibold"
+		app:layout_constraintStart_toEndOf="@id/bus_photo"
+		app:layout_constraintTop_toTopOf="parent"
+		tools:text="Asian Express" />
+	
+	<io.peanutsdk.widget.BaselineGridTextView
+		android:id="@+id/trip_details"
+		style="@style/TextAppearance.DribbbleShotDescription"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_marginEnd="@dimen/padding_room_for_fab"
+		android:layout_marginStart="@dimen/padding_normal"
+		android:maxLines="2"
+		android:textColor="@color/text_secondary_dark"
+		android:textSize="14sp"
+		app:fontFamily="@font/nunito_semibold"
+		app:layout_constraintStart_toEndOf="@id/bus_photo"
+		app:layout_constraintTop_toBottomOf="@id/bus_name"
+		tools:text="Kumasi - Accra" />
+	
+	<io.peanutsdk.widget.BaselineGridTextView
+		android:id="@+id/trip_time_details"
+		style="@style/TextAppearance.DribbbleShotDescription"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_marginEnd="@dimen/padding_room_for_fab"
+		android:layout_marginStart="@dimen/padding_normal"
+		android:textColor="@color/text_tertiary_dark"
+		android:textSize="14sp"
+		app:fontFamily="@font/nunito_semibold"
+		app:layout_constraintStart_toEndOf="@id/bus_photo"
+		app:layout_constraintTop_toBottomOf="@id/trip_details"
+		tools:text="4:00pm - 8:30pm | 04h 30m" />
+	
+	<io.peanutsdk.widget.BaselineGridTextView
+		android:id="@+id/bus_number"
+		style="@style/TextAppearance.DribbbleShotDescription"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_marginEnd="@dimen/padding_room_for_fab"
+		android:layout_marginStart="@dimen/padding_normal"
+		android:textColor="@color/text_tertiary_dark"
+		android:textSize="14sp"
+		app:fontFamily="@font/nunito_semibold"
+		app:layout_constraintStart_toEndOf="@id/bus_photo"
+		app:layout_constraintTop_toBottomOf="@id/trip_time_details"
+		tools:text="GT 1209- 2018" />
+	
+	<io.peanutsdk.widget.BaselineGridTextView
+		android:id="@+id/trip_price"
+		style="@style/TextAppearance.DribbbleShotDescription"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_marginEnd="@dimen/spacing_normal"
+		android:textColor="@color/text_primary_dark"
+		android:textSize="18sp"
+		android:textStyle="bold"
+		app:fontFamily="@font/nunito_semibold"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintTop_toTopOf="parent"
+		tools:text="GHS 90.00" />
+
+</android.support.constraint.ConstraintLayout>

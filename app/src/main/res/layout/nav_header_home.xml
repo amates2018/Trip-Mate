@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
 	xmlns:app="http://schemas.android.com/apk/res-auto"
+	xmlns:tools="http://schemas.android.com/tools"
 	android:layout_width="match_parent"
 	android:layout_height="@dimen/nav_header_height"
-	xmlns:tools="http://schemas.android.com/tools"
 	android:background="@color/background_super_dark"
 	android:gravity="bottom"
 	android:orientation="vertical"
@@ -15,10 +15,10 @@
 	
 	<ImageView
 		android:id="@+id/user_profile"
-		android:layout_width="@dimen/large_avatar_size"
-		android:layout_height="@dimen/large_avatar_size"
-		android:paddingTop="@dimen/nav_header_vertical_spacing"
+		android:layout_width="@dimen/avatar_bounds"
+		android:layout_height="@dimen/avatar_bounds"
 		android:layout_marginBottom="@dimen/padding_normal"
+		android:paddingTop="@dimen/nav_header_vertical_spacing"
 		app:srcCompat="@drawable/ic_player"
 		tools:ignore="ContentDescription" />
 	
@@ -27,18 +27,18 @@
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
 		android:paddingTop="@dimen/nav_header_vertical_spacing"
-		tools:text="Trip mate"
+		android:text="@string/app_name"
+		android:textAppearance="@style/TextAppearance.DribbbleShotDescription"
 		android:textColor="@color/text_primary_light"
-		app:fontFamily="@font/nunito_semibold"
-		android:textAppearance="@style/TextAppearance.DribbbleShotDescription" />
+		app:fontFamily="@font/nunito_semibold" />
 	
 	<io.peanutsdk.widget.BaselineGridTextView
 		android:id="@+id/user_email"
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
-		app:fontFamily="@font/nunito_semibold"
-		android:textColor="@color/text_secondary_light"
+		android:text="@string/login_prompt"
 		android:textAppearance="@style/TextAppearance.DribbbleShotDescription"
-		tools:text="android.studio@android.com" />
+		android:textColor="@color/text_secondary_light"
+		app:fontFamily="@font/nunito_semibold" />
 
 </LinearLayout>

@@ -5,5 +5,125 @@
 	android:layout_width="match_parent"
 	android:layout_height="match_parent"
 	tools:context="io.tripmate.ui.RegisterActivity">
+	
+	<View
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		android:background="@color/background_light" />
+	
+	<LinearLayout
+		android:id="@+id/container"
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		android:gravity="center"
+		android:orientation="vertical"
+		android:paddingEnd="@dimen/padding_dialog"
+		android:paddingStart="@dimen/padding_dialog"
+		android:paddingTop="@dimen/spacing_huge">
+		
+		<io.peanutsdk.widget.BaselineGridTextView
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_gravity="start"
+			android:paddingBottom="@dimen/spacing_normal"
+			android:paddingTop="@dimen/padding_normal"
+			android:text="@string/almost_done"
+			android:textAppearance="@style/TextAppearance.DribbbleShotDescription"
+			android:textColor="@color/text_primary_dark"
+			android:textSize="26sp"
+			android:textStyle="bold"
+			app:fontFamily="@font/nunito_semibold" />
+		
+		<io.peanutsdk.widget.BaselineGridTextView
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_gravity="start"
+			android:text="@string/register_desc"
+			android:textAppearance="@style/TextAppearance.DribbbleShotDescription"
+			android:textColor="@color/text_secondary_dark"
+			app:fontFamily="@font/nunito_semibold" />
+		
+		<io.peanutsdk.widget.ForegroundImageView
+			android:id="@+id/user_avatar"
+			android:layout_width="@dimen/large_avatar_size"
+			android:layout_height="@dimen/large_avatar_size"
+			android:layout_gravity="center_horizontal"
+			android:layout_marginTop="@dimen/spacing_large"
+			android:src="@drawable/avatar_placeholder" />
+		
+		<android.support.design.widget.TextInputLayout
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:layout_gravity="center_horizontal"
+			android:layout_marginTop="@dimen/padding_dialog"
+			app:hintTextAppearance="@style/TextAppearance.FloatLabelHint">
+			
+			<android.support.design.widget.TextInputEditText
+				android:id="@+id/username_content"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:fontFamily="@font/nunito_semibold"
+				android:hint="@string/username"
+				android:imeOptions="actionNext"
+				android:inputType="textPersonName|textCapWords"
+				android:textColor="@color/text_secondary_dark"
+				tools:text="Quabynah Bilson" />
+		
+		</android.support.design.widget.TextInputLayout>
+		
+		<android.support.design.widget.TextInputLayout
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:layout_gravity="center_horizontal"
+			app:hintTextAppearance="@style/TextAppearance.FloatLabelHint">
+			
+			<android.support.design.widget.TextInputEditText
+				android:id="@+id/phone_content"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:fontFamily="@font/nunito_semibold"
+				android:hint="@string/phone"
+				android:imeOptions="actionNext"
+				android:inputType="phone"
+				android:textColor="@color/text_secondary_dark"
+				tools:text="0554022344" />
+		
+		</android.support.design.widget.TextInputLayout>
+		
+		<android.support.design.widget.TextInputLayout
+			android:id="@+id/payment_content_label"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:visibility="gone"
+			android:layout_gravity="center_horizontal"
+			app:hintTextAppearance="@style/TextAppearance.FloatLabelHint">
+			
+			<AutoCompleteTextView
+				android:id="@+id/payment_content"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:fontFamily="@font/nunito_semibold"
+				android:hint="@string/payment_method"
+				android:imeOptions="actionDone"
+				android:inputType="textCapWords"
+				android:textColor="@color/text_secondary_dark"
+				tools:text="MTN Mobile Money" />
+		
+		</android.support.design.widget.TextInputLayout>
+		
+		<Button
+			android:id="@+id/register_button"
+			android:layout_width="250dp"
+			android:layout_height="wrap_content"
+			android:layout_marginTop="@dimen/spacing_large"
+			android:background="@drawable/button_background"
+			android:onClick="register"
+			android:paddingEnd="@dimen/padding_dialog"
+			android:paddingStart="@dimen/padding_dialog"
+			android:stateListAnimator="@animator/raise"
+			android:text="@string/finish"
+			android:textColor="@color/text_primary_light" />
+	
+	</LinearLayout>
 
 </android.support.constraint.ConstraintLayout>

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:tools="http://schemas.android.com/tools"
+	android:id="@+id/container"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	android:background="@color/background_super_dark"
+	tools:context="io.tripmate.ui.SearchResultsActivity">
+	
+	<include
+		layout="@layout/header_toolbar"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content" />
+	
+	<android.support.v7.widget.RecyclerView
+		android:id="@+id/search_results_grid"
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		android:layout_marginTop="?android:actionBarSize"
+		android:background="@color/background_light"
+		android:scrollbarStyle="outsideOverlay"
+		android:scrollbars="vertical" />
+
+</android.support.constraint.ConstraintLayout>

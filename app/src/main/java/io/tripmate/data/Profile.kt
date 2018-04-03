@@ -19,7 +19,7 @@ class Profile : Parcelable {
 
     constructor()
 
-    constructor(regular: String, thumb: String, cover: String) {
+    constructor(regular: String?, thumb: String?, cover: String?) {
         this.regular = regular
         this.thumb = thumb
         this.cover = cover
@@ -33,6 +33,10 @@ class Profile : Parcelable {
 
     override fun describeContents(): Int {
         return 0
+    }
+
+    override fun toString(): String {
+        return "Profile(regular=$regular, thumb=$thumb, cover=$cover)"
     }
 
     companion object CREATOR : Parcelable.Creator<Profile> {

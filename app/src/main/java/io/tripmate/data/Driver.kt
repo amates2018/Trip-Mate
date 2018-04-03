@@ -2,12 +2,13 @@ package io.tripmate.data
 
 import android.os.Parcel
 import android.os.Parcelable
+import io.tripmate.util.User
 
 
 /**
  * Driver data model
  */
-class Driver : User, Parcelable {
+class Driver : User {
     override var key: String? = null
     override var username: String? = null
     override var email: String? = null
@@ -61,6 +62,10 @@ class Driver : User, Parcelable {
 
     override fun describeContents(): Int {
         return 0
+    }
+
+    override fun toString(): String {
+        return "Driver(key=$key, username=$username, email=$email, phone=$phone, profile=$profile, busKey=$busKey, busNumber=$busNumber, busType=$busType, terminalKey=$terminalKey)"
     }
 
     companion object CREATOR : Parcelable.Creator<Driver> {

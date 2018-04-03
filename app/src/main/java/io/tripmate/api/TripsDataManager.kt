@@ -30,14 +30,15 @@ abstract class TripsDataManager(private val activity: Activity)
         loadStarted()
         val query = db.collection(TripMateUtils.TRIP_REF)
         inflight.add(query)
+        val trips: MutableList<Trip> = ArrayList(0)
         query.addSnapshotListener(activity, { querySnapshot, exception ->
             if (exception != null) {
-                endProcess(query)
+                endProcess(query, trips)
                 return@addSnapshotListener
             }
 
             if (querySnapshot != null && !querySnapshot.isEmpty) {
-                val trips: MutableList<Trip> = ArrayList(0)
+
                 for (doc in querySnapshot.documents) {
                     if (doc.exists()) {
                         val trip = doc.toObject(Trip::class.java)
@@ -45,21 +46,21 @@ abstract class TripsDataManager(private val activity: Activity)
                     }
                 }
 
-                onDataLoaded(trips)
-                loadFinished()
+                endProcess(query, trips)
                 return@addSnapshotListener
 
             } else {
-                endProcess(query)
+                endProcess(query, trips)
                 return@addSnapshotListener
             }
         })
 
     }
 
-    private fun endProcess(query: Query) {
-        inflight.remove(query)
+    private fun endProcess(query: Query, trips: MutableList<Trip>) {
         loadFinished()
+        onDataLoaded(trips)
+        inflight.remove(query)
     }
 
 }

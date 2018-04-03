@@ -2,14 +2,15 @@ package io.tripmate.data
 
 import android.os.Parcel
 import android.os.Parcelable
+import io.tripmate.util.SearchableItem
 
 /**
  * Bus data model
  */
-class Bus : Parcelable {
-    var key: String? = null
-    var number: String? = null
-    var type: String? = null
+class Bus : SearchableItem {
+    override var key: String? = null
+    override var number: String? = null
+    override var type: String? = null
     var image: String? = null
     var terminalKey: String? = null
     var seats: List<Seat>? = null
@@ -46,6 +47,10 @@ class Bus : Parcelable {
 
     override fun describeContents(): Int {
         return 0
+    }
+
+    override fun toString(): String {
+        return "Bus(key=$key, number=$number, type=$type, image=$image, terminalKey=$terminalKey, seats=$seats)"
     }
 
     companion object CREATOR : Parcelable.Creator<Bus> {

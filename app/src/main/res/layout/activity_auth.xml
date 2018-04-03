@@ -4,6 +4,117 @@
 	xmlns:tools="http://schemas.android.com/tools"
 	android:layout_width="match_parent"
 	android:layout_height="match_parent"
+	app:layout_behavior="@string/appbar_scrolling_view_behavior"
 	tools:context="io.tripmate.ui.AuthActivity">
+	
+	<View
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		android:background="@color/background_light" />
+	
+	<LinearLayout
+		android:id="@+id/container"
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		android:gravity="center"
+		android:orientation="vertical"
+		android:paddingEnd="@dimen/padding_dialog"
+		android:paddingStart="@dimen/padding_dialog"
+		android:paddingTop="@dimen/spacing_huge">
+		
+		<io.peanutsdk.widget.BaselineGridTextView
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_gravity="start"
+			android:paddingBottom="@dimen/spacing_normal"
+			android:paddingTop="@dimen/padding_normal"
+			android:text="@string/welcome_back"
+			android:textAppearance="@style/TextAppearance.DribbbleShotDescription"
+			android:textColor="@color/text_primary_dark"
+			android:textSize="26sp"
+			android:textStyle="bold"
+			app:fontFamily="@font/nunito_semibold" />
+		
+		<io.peanutsdk.widget.BaselineGridTextView
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_gravity="start"
+			android:text="@string/welcome_desc"
+			android:textAppearance="@style/TextAppearance.DribbbleShotDescription"
+			android:textColor="@color/text_secondary_dark"
+			app:fontFamily="@font/nunito_semibold" />
+		
+		<android.support.design.widget.TextInputLayout
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:layout_gravity="center_horizontal"
+			android:layout_marginTop="@dimen/spacing_xlarge"
+			app:hintTextAppearance="@style/TextAppearance.FloatLabelHint">
+			
+			<android.support.design.widget.TextInputEditText
+				android:id="@+id/username_content"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:fontFamily="@font/nunito_semibold"
+				android:hint="@string/email_address"
+				android:imeOptions="actionNext"
+				android:inputType="textEmailAddress|textPersonName"
+				android:textColor="@color/text_secondary_dark" />
+		
+		</android.support.design.widget.TextInputLayout>
+		
+		<android.support.design.widget.TextInputLayout
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:layout_gravity="center_horizontal"
+			app:hintTextAppearance="@style/TextAppearance.FloatLabelHint"
+			app:passwordToggleDrawable="@drawable/asl_password_visibility"
+			app:passwordToggleEnabled="true">
+			
+			<io.peanutsdk.widget.PasswordEntry
+				android:id="@+id/password_content"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:fontFamily="@font/nunito_semibold"
+				android:hint="@string/password"
+				android:imeOptions="actionDone"
+				android:inputType="textPassword"
+				android:textColor="@color/text_secondary_dark" />
+		
+		</android.support.design.widget.TextInputLayout>
+		
+		<Button
+			android:id="@+id/forgot_password"
+			style="@style/Widget.AppCompat.Button.Borderless"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_gravity="start"
+			android:layout_marginTop="@dimen/padding_dialog"
+			android:clickable="true"
+			android:focusable="true"
+			android:fontFamily="@font/nunito_semibold"
+			android:onClick="resetPassword"
+			android:paddingBottom="@dimen/spacing_normal"
+			android:paddingTop="@dimen/spacing_normal"
+			android:text="@string/forgot_password"
+			android:textAppearance="@style/TextAppearance.DribbbleShotDescription"
+			android:textColor="@color/text_primary_dark"
+			android:textStyle="bold" />
+		
+		<Button
+			android:id="@+id/login_button"
+			android:layout_width="250dp"
+			android:layout_height="wrap_content"
+			android:layout_marginTop="@dimen/spacing_large"
+			android:background="@drawable/button_background"
+			android:onClick="doLogin"
+			android:paddingEnd="@dimen/padding_dialog"
+			android:paddingStart="@dimen/padding_dialog"
+			android:stateListAnimator="@animator/raise"
+			android:text="@string/login"
+			android:textColor="@color/text_primary_light" />
+	
+	</LinearLayout>
+
 
 </android.support.constraint.ConstraintLayout>

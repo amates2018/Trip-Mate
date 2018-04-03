@@ -4,11 +4,12 @@ import android.os.Parcel
 import android.os.Parcelable
 import android.support.annotation.Nullable
 import com.google.firebase.firestore.GeoPoint
+import io.tripmate.util.User
 
 /**
  * Data model for storing Passenger's data
  */
-class Passenger : User, Parcelable {
+class Passenger : User {
     override var key: String? = null
     override var username: String? = null
     override var email: String? = null
@@ -29,8 +30,8 @@ class Passenger : User, Parcelable {
     //Default constructor for serialization and deserialization
     constructor()
 
-    constructor(key: String, username: String, email: String, phone: String, payment: String,
-                profile: Profile, @Nullable location: GeoPoint?) {
+    constructor(key: String?, username: String?, email: String?, phone: String?, payment: String?,
+                profile: Profile?, @Nullable location: GeoPoint?) {
         this.key = key
         this.username = username
         this.email = email
@@ -53,6 +54,10 @@ class Passenger : User, Parcelable {
         return 0
     }
 
+    override fun toString(): String {
+        return "Passenger(key=$key, username=$username, email=$email, phone=$phone, profile=$profile, payment=$payment, location=$location)"
+    }
+
     companion object CREATOR : Parcelable.Creator<Passenger> {
         override fun createFromParcel(parcel: Parcel): Passenger {
             return Passenger(parcel)
@@ -62,4 +67,6 @@ class Passenger : User, Parcelable {
             return arrayOfNulls(size)
         }
     }
+
+
 }
