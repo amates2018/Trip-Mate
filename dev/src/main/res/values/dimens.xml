@@ -12,6 +12,7 @@
     <dimen name="spacing_xlarge">48dp</dimen>
     <dimen name="spacing_huge">64dp</dimen>
     <dimen name="spacing_enormous">120dp</dimen>
+    <dimen name="spacing_header">300dp</dimen>
     <dimen name="padding_normal">16dp</dimen>
     <dimen name="padding_large">24dp</dimen>
     <dimen name="fab_size">56dp</dimen>
@@ -58,7 +59,7 @@
     <dimen name="shot_collapsed_app_bar_height">168dp</dimen> <!-- 3 * ?android:actionBarSize -->
     <!-- avatar should be a 40dp asset in a 48dp touch target & optically aligned with standard padding -->
     <dimen name="avatar_size">40dp</dimen>
-    <dimen name="avatar_bounds">56dp</dimen>
+    <dimen name="avatar_bounds">76dp</dimen>
     <dimen name="avatar_padding">4dp</dimen> <!-- (avatar_bounds - avatar_size) / 2 -->
     <dimen name="avatar_margin">12dp</dimen> <!-- padding_normal - avatar_padding -->
     <dimen name="avatar_ripple_radius">20dp</dimen> <!-- avatar_size / 2 -->
@@ -85,7 +86,7 @@
     <dimen name="z_fab_over_touchable_app_bar">9dp</dimen>
     <dimen name="z_drawer">16dp</dimen>
     <dimen name="z_dialog">24dp</dimen>
-	<dimen name="nav_header_height">200dp</dimen>
+	<dimen name="nav_header_height">250dp</dimen>
     <dimen name="header_avatar">96dp</dimen>
 	<dimen name="fab_margin">16dp</dimen>
 	

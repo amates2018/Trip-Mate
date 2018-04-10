@@ -7,11 +7,13 @@
 	android:background="@color/white"
 	tools:context="io.tripmate.ui.SplashActivity">
 	
-	<io.peanutsdk.widget.FourThreeImageView
-		android:id="@+id/splas_img"
+	<ImageView
+		android:id="@+id/splash_img"
 		android:layout_width="0dp"
 		android:layout_height="match_parent"
-		android:src="@drawable/icon"
+		android:scaleType="centerCrop"
+		android:src="@drawable/bg3"
+		app:layout_constraintBottom_toBottomOf="parent"
 		app:layout_constraintEnd_toEndOf="parent"
 		app:layout_constraintStart_toStartOf="parent"
 		app:layout_constraintTop_toTopOf="parent" />
@@ -20,16 +22,16 @@
 		android:id="@+id/splash_title"
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
-		android:layout_marginTop="@dimen/spacing_large"
+		android:layout_marginTop="@dimen/spacing_xlarge"
 		android:padding="@dimen/padding_normal"
 		android:text="@string/app_name"
 		android:textAppearance="@style/TextAppearance.DribbbleShotDescription"
-		android:textColor="@color/text_primary_dark"
-		android:textSize="22sp"
+		android:textColor="@color/text_primary_light"
+		android:textSize="26sp"
 		app:fontFamily="@font/abeezee"
 		app:layout_constraintEnd_toEndOf="parent"
 		app:layout_constraintStart_toStartOf="parent"
-		app:layout_constraintTop_toBottomOf="@id/splas_img" />
+		app:layout_constraintTop_toTopOf="parent" />
 	
 	<io.peanutsdk.widget.BaselineGridTextView
 		android:id="@+id/splash_desc"
@@ -40,7 +42,7 @@
 		android:text="@string/app_desc"
 		android:textAlignment="center"
 		android:textAppearance="@style/TextAppearance.DribbbleShotDescription"
-		android:textColor="@color/text_secondary_dark"
+		android:textColor="@color/text_secondary_light"
 		app:fontFamily="@font/abeezee"
 		app:layout_constraintEnd_toEndOf="parent"
 		app:layout_constraintStart_toStartOf="parent"

@@ -20,10 +20,11 @@ android {
         versionCode gitCommitCount
         versionName gitSha
         archivesBaseName = "trip-mate"
-        resConfigs "auto"
         multiDexEnabled true
 
         buildConfigField "String", "GIT_SHA", "\"${gitSha}\""
+        buildConfigField "String", "GIT_COMMIT_COUNT", "\"${gitCommitCount}\""
+        buildConfigField "String", "GIT_TAG", "\"${gitTag}\""
 
         final def filesAuthorityValue = applicationId + ".shareprovider"
         buildConfigField "String", "FILES_AUTHORITY", "\"${filesAuthorityValue}\""
