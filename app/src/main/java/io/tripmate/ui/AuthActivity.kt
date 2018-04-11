@@ -10,19 +10,20 @@ import android.util.Patterns
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.ImageView
 import android.widget.Toast
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.Theme
+import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions.withCrossFade
+import com.bumptech.glide.request.target.Target
 import io.peanutsdk.util.bindView
 import io.peanutsdk.widget.PasswordEntry
 import io.tripmate.R
 import io.tripmate.api.AllUserDataManager
 import io.tripmate.data.Driver
 import io.tripmate.data.Passenger
-import io.tripmate.util.TripMatePrefs
-import io.tripmate.util.TripMateUtils
-import io.tripmate.util.User
-import io.tripmate.util.UserType
+import io.tripmate.util.*
 
 /**
  * Authentication for users
@@ -33,6 +34,7 @@ class AuthActivity : Activity() {
     private val password: PasswordEntry by bindView(R.id.password_content)
     private val resetPassword: Button by bindView(R.id.forgot_password)
     private val login: Button by bindView(R.id.login_button)
+    private val logo: ImageView by bindView(R.id.logo_layout)
 
     private lateinit var prefs: TripMatePrefs
     private lateinit var loading: MaterialDialog
@@ -49,6 +51,16 @@ class AuthActivity : Activity() {
         //Setup dialog
         loading = TripMateUtils.getDialog(this@AuthActivity)
 
+        //Load logo
+        GlideApp.with(this@AuthActivity)
+                .load(R.drawable.icon)
+                .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC)
+                .placeholder(R.drawable.avatar_placeholder)
+                .circleCrop()
+                .transition(withCrossFade())
+                .override(Target.SIZE_ORIGINAL, Target.SIZE_ORIGINAL)
+                .error(R.drawable.avatar_placeholder)
+                .into(logo)
 
         dataManager = object : AllUserDataManager(this) {
             override fun onDataLoaded(data: List<User>) {
@@ -213,11 +225,6 @@ class AuthActivity : Activity() {
             passwordText.isEmpty() || passwordText.length < 6 || TextUtils.isDigitsOnly(passwordText) -> {
                 showLoginFailed(getString(R.string.prompt_password_error))
                 password.requestFocus()
-            }
-
-        //No internet?
-            !prefs.isConnected -> {
-                showLoginFailed("You need internet connection")
             }
 
         //Ready to go

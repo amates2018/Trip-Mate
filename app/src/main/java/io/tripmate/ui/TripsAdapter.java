@@ -1,5 +1,6 @@
 package io.tripmate.ui;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.ActivityOptions;
 import android.content.Intent;
@@ -14,7 +15,6 @@ import android.widget.TextView;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.target.Target;
 
-import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -54,13 +54,14 @@ public class TripsAdapter extends RecyclerView.Adapter<TripsAdapter.TripsViewHol
 		return new TripsViewHolder(inflater.inflate(R.layout.trip_item, parent, false));
 	}
 	
+	@SuppressLint("SetTextI18n")
 	@Override
 	public void onBindViewHolder(@NonNull TripsViewHolder holder, int position) {
 		//Get trip item per position
 		Trip trip = items.get(position);
 		
 		//Set destination and origin
-		holder.details.setText(String.format("%s - %s", trip.getOrigin(), trip.getDestination()));
+		holder.details.setText(trip.getOrigin() + " - " + trip.getDestination());
 		
 		//Get bus details
 		Bus bus = trip.getBus();

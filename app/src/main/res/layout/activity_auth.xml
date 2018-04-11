@@ -10,14 +10,16 @@
 	
 	<LinearLayout
 		android:layout_width="match_parent"
-		android:layout_height="wrap_content"
+		android:layout_height="match_parent"
 		android:orientation="vertical">
 		
-		<io.peanutsdk.widget.FourThreeImageView
+		<ImageView
 			android:id="@+id/logo_layout"
-			android:layout_width="match_parent"
-			android:layout_height="wrap_content"
-			android:src="@drawable/icon" />
+			android:layout_width="@dimen/huge_avatar_height"
+			android:layout_height="@dimen/huge_avatar_height"
+			android:layout_gravity="center_horizontal"
+			android:src="@drawable/icon"
+			tools:ignore="ContentDescription" />
 		
 		<LinearLayout
 			android:id="@+id/container"

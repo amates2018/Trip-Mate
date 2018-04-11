@@ -98,7 +98,7 @@
 						android:layout_margin="@dimen/fab_margin"
 						android:background="@drawable/fab"
 						android:elevation="@dimen/z_fab"
-						android:src="@drawable/ic_swap"
+						android:src="@drawable/ic_swap_vert"
 						tools:ignore="ContentDescription" />
 					
 					<android.support.design.widget.TextInputLayout

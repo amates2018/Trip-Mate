@@ -16,6 +16,7 @@ object TripMateUtils {
     const val USER_REF = "user"
     const val SEAT_REF = "seat"
     const val TERMINAL_REF = "terminal"
+    const val RESERVATION_REF = "reservation"
 
     //Shared preferences
     const val TRIP_MATE_PREFS = "TRIP_MATE_PREFS"

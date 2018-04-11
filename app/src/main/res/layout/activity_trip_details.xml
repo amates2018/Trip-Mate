@@ -2,8 +2,284 @@
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
 	xmlns:app="http://schemas.android.com/apk/res-auto"
 	xmlns:tools="http://schemas.android.com/tools"
+	android:id="@+id/root"
 	android:layout_width="match_parent"
 	android:layout_height="match_parent"
+	android:background="@color/background_super_dark"
+	app:layout_behavior="@string/appbar_scrolling_view_behavior"
 	tools:context="io.tripmate.ui.TripDetailsActivity">
+	
+	<View
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		android:layout_marginTop="?android:actionBarSize"
+		android:background="@color/background_card" />
+	
+	<include
+		layout="@layout/header_toolbar"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toTopOf="parent" />
+	
+	<ScrollView
+		android:id="@+id/scroll_container"
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		android:layout_marginTop="?android:actionBarSize">
+		
+		<LinearLayout
+			android:id="@+id/container"
+			android:layout_width="match_parent"
+			android:layout_height="match_parent"
+			android:orientation="vertical">
+			
+			<!--trip details-->
+			<android.support.v7.widget.CardView
+				android:id="@+id/card_trip_details"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:layout_margin="@dimen/spacing_normal"
+				app:cardBackgroundColor="@color/background_card"
+				app:cardCornerRadius="@dimen/spacing_micro"
+				app:contentPadding="@dimen/padding_normal">
+				
+				<android.support.constraint.ConstraintLayout
+					android:id="@+id/layout_content_trip"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content">
+					
+					<io.peanutsdk.widget.BaselineGridTextView
+						android:id="@+id/card_header"
+						android:layout_width="0dp"
+						android:layout_height="wrap_content"
+						android:gravity="start"
+						android:text="Trip details"
+						android:textColor="@color/accent"
+						android:textSize="18sp"
+						app:fontFamily="@font/nunito_semibold"
+						app:layout_constraintEnd_toEndOf="parent"
+						app:layout_constraintStart_toStartOf="parent"
+						app:layout_constraintTop_toTopOf="parent" />
+					
+					<io.peanutsdk.widget.BaselineGridTextView
+						android:id="@+id/trip_origin_header"
+						android:layout_width="wrap_content"
+						android:layout_height="wrap_content"
+						android:layout_marginTop="@dimen/spacing_normal"
+						android:gravity="start"
+						android:textAppearance="@style/TextAppearance.DribbbleShotDescription"
+						android:textColor="@color/text_secondary_dark"
+						app:fontFamily="@font/nunito_semibold"
+						app:layout_constraintEnd_toStartOf="@id/trip_content_img"
+						app:layout_constraintStart_toStartOf="parent"
+						app:layout_constraintTop_toBottomOf="@id/card_header"
+						tools:text="Delhi" />
+					
+					<io.peanutsdk.widget.BaselineGridTextView
+						android:id="@+id/trip_origin_content"
+						android:layout_width="wrap_content"
+						android:layout_height="wrap_content"
+						android:layout_marginTop="8dp"
+						android:gravity="start"
+						android:textAppearance="@style/TextAppearance.DribbbleShotTitle"
+						android:textColor="@color/text_primary_dark"
+						android:textSize="28sp"
+						app:fontFamily="@font/nunito_semibold"
+						app:layout_constraintEnd_toStartOf="@id/trip_content_img"
+						app:layout_constraintStart_toStartOf="parent"
+						app:layout_constraintTop_toBottomOf="@id/trip_origin_header"
+						tools:text="DEL" />
+					
+					<ImageView
+						android:id="@+id/trip_content_img"
+						android:layout_width="wrap_content"
+						android:layout_height="wrap_content"
+						app:layout_constraintBottom_toBottomOf="parent"
+						app:layout_constraintEnd_toEndOf="parent"
+						app:layout_constraintStart_toStartOf="parent"
+						app:layout_constraintTop_toBottomOf="@id/card_header"
+						app:srcCompat="@drawable/ic_swap"
+						tools:ignore="ContentDescription" />
+					
+					<io.peanutsdk.widget.BaselineGridTextView
+						android:id="@+id/trip_dest_header"
+						android:layout_width="wrap_content"
+						android:layout_height="wrap_content"
+						android:layout_marginTop="@dimen/spacing_normal"
+						android:gravity="end"
+						android:textAppearance="@style/TextAppearance.DribbbleShotDescription"
+						android:textColor="@color/text_secondary_dark"
+						app:fontFamily="@font/nunito_semibold"
+						app:layout_constraintEnd_toEndOf="parent"
+						app:layout_constraintStart_toEndOf="@id/trip_content_img"
+						app:layout_constraintTop_toBottomOf="@id/card_header"
+						tools:text="New York" />
+					
+					<io.peanutsdk.widget.BaselineGridTextView
+						android:id="@+id/trip_dest_content"
+						android:layout_width="wrap_content"
+						android:layout_height="wrap_content"
+						android:layout_marginTop="8dp"
+						android:gravity="end"
+						android:textAppearance="@style/TextAppearance.DribbbleShotTitle"
+						android:textColor="@color/text_primary_dark"
+						android:textSize="28sp"
+						app:fontFamily="@font/nunito_semibold"
+						app:layout_constraintEnd_toEndOf="parent"
+						app:layout_constraintStart_toEndOf="@id/trip_content_img"
+						app:layout_constraintTop_toBottomOf="@id/trip_dest_header"
+						tools:text="JFK" />
+				
+				
+				</android.support.constraint.ConstraintLayout>
+			
+			</android.support.v7.widget.CardView>
+			
+			<!--bus details-->
+			<android.support.v7.widget.CardView
+				android:id="@+id/card_duration_details"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:layout_margin="@dimen/spacing_normal"
+				app:cardBackgroundColor="@color/background_card"
+				app:cardCornerRadius="@dimen/spacing_micro"
+				app:contentPadding="@dimen/padding_normal">
+				
+				<android.support.constraint.ConstraintLayout
+					android:id="@+id/layout_duration_trip"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content">
+					
+					<io.peanutsdk.widget.BaselineGridTextView
+						android:id="@+id/card_duration_header"
+						android:layout_width="0dp"
+						android:layout_height="wrap_content"
+						android:gravity="start"
+						android:text="Duration &amp; Bus details"
+						android:textColor="@color/accent"
+						android:textSize="18sp"
+						app:fontFamily="@font/nunito_semibold"
+						app:layout_constraintEnd_toEndOf="parent"
+						app:layout_constraintStart_toStartOf="parent"
+						app:layout_constraintTop_toTopOf="parent" />
+					
+					<io.peanutsdk.widget.BaselineGridTextView
+						android:id="@+id/bus_name"
+						android:layout_width="wrap_content"
+						android:layout_height="wrap_content"
+						android:layout_marginTop="@dimen/spacing_normal"
+						android:textColor="@color/text_secondary_dark"
+						android:textSize="16sp"
+						app:fontFamily="@font/nunito_semibold"
+						app:layout_constraintTop_toBottomOf="@id/card_duration_header"
+						tools:text="Yutong Bus" />
+					
+					<io.peanutsdk.widget.BaselineGridTextView
+						android:id="@+id/bus_number"
+						android:layout_width="wrap_content"
+						android:layout_height="wrap_content"
+						android:layout_marginTop="@dimen/spacing_micro"
+						android:textColor="@color/text_secondary_dark"
+						android:textSize="16sp"
+						app:fontFamily="@font/nunito_semibold"
+						app:layout_constraintTop_toBottomOf="@id/bus_name"
+						tools:text="GT-343-16" />
+					
+					
+					<io.peanutsdk.widget.BaselineGridTextView
+						android:layout_width="wrap_content"
+						android:layout_height="wrap_content"
+						android:layout_marginTop="@dimen/spacing_micro"
+						android:textColor="@color/text_secondary_dark"
+						android:textSize="16sp"
+						app:fontFamily="@font/nunito_semibold"
+						app:layout_constraintTop_toBottomOf="@id/bus_number"
+						tools:text="2 hrs" />
+				
+				</android.support.constraint.ConstraintLayout>
+			
+			</android.support.v7.widget.CardView>
+			
+			<!--driver details-->
+			<android.support.v7.widget.CardView
+				android:id="@+id/card_driver_details"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:layout_margin="@dimen/spacing_normal"
+				app:cardBackgroundColor="@color/background_card"
+				app:cardCornerRadius="@dimen/spacing_micro"
+				app:contentPadding="@dimen/padding_normal">
+				
+				<android.support.constraint.ConstraintLayout
+					android:id="@+id/layout_driver_trip"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content">
+					
+					<io.peanutsdk.widget.BaselineGridTextView
+						android:id="@+id/card_driver_header"
+						android:layout_width="0dp"
+						android:layout_height="wrap_content"
+						android:gravity="start"
+						android:text="Driver info"
+						android:textColor="@color/accent"
+						android:textSize="18sp"
+						app:fontFamily="@font/nunito_semibold"
+						app:layout_constraintEnd_toEndOf="parent"
+						app:layout_constraintStart_toStartOf="parent"
+						app:layout_constraintTop_toTopOf="parent" />
+					
+					<io.peanutsdk.widget.ForegroundImageView
+						android:id="@+id/driver_profile"
+						android:layout_width="@dimen/driver_avatar_size"
+						android:layout_height="@dimen/driver_avatar_size"
+						android:layout_marginTop="@dimen/spacing_normal"
+						android:src="@drawable/avatar_placeholder"
+						app:layout_constraintBottom_toBottomOf="parent"
+						app:layout_constraintStart_toStartOf="parent"
+						app:layout_constraintTop_toBottomOf="@id/card_driver_header" />
+					
+					<io.peanutsdk.widget.BaselineGridTextView
+						android:id="@+id/driver_username"
+						android:layout_width="wrap_content"
+						android:layout_height="wrap_content"
+						android:layout_marginStart="@dimen/padding_normal"
+						app:layout_constraintStart_toEndOf="@id/driver_profile"
+						app:layout_constraintTop_toBottomOf="@id/card_driver_header"
+						tools:text="Opanin Kwame Sefa Duah"
+						android:textSize="18sp"
+						app:fontFamily="@font/nunito_semibold"
+						android:textColor="@color/text_secondary_dark"/>
+					
+					<io.peanutsdk.widget.BaselineGridTextView
+						android:layout_width="wrap_content"
+						android:layout_height="wrap_content"
+						android:layout_marginStart="@dimen/padding_normal"
+						app:layout_constraintBottom_toBottomOf="parent"
+						app:layout_constraintStart_toEndOf="@id/driver_profile"
+						app:layout_constraintTop_toBottomOf="@id/driver_username"
+						tools:text="Circle Bus Terminal"
+						android:textSize="16sp"
+						app:fontFamily="@font/nunito_semibold"
+						android:textColor="@color/text_tertiary_dark"/>
+				
+				</android.support.constraint.ConstraintLayout>
+			
+			</android.support.v7.widget.CardView>
+		
+		</LinearLayout>
+	
+	</ScrollView>
+	
+	<!--
+	 override var key: String? = null
+    override var origin: String? = null
+    override var destination: String? = null
+    var duration: Double = 0.00
+    var driver: Driver? = null
+    var bus: Bus? = null
+    var price: Double = 0.00
+    private var oGeoPoint: GeoPoint? = null
+    private var dGeoPoint: GeoPoint? = null
+	-->
 
 </android.support.constraint.ConstraintLayout>
