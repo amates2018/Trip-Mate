@@ -27,6 +27,7 @@ import com.bumptech.glide.request.target.Target
 import io.peanutsdk.util.bindView
 import io.peanutsdk.widget.ForegroundImageView
 import io.tripmate.R
+import io.tripmate.data.Driver
 import io.tripmate.data.Passenger
 import io.tripmate.data.Profile
 import io.tripmate.util.*
@@ -64,8 +65,6 @@ class RegisterActivity : Activity() {
             user = intent.getParcelableExtra<User>(EXTRA_USER)
             bindUser()
         }
-
-        setupAutoComplete()
     }
 
     private fun setupAutoComplete() {
@@ -101,9 +100,24 @@ class RegisterActivity : Activity() {
         if (user is Passenger) {
             TransitionManager.beginDelayedTransition(container)
             methodLabel.visibility = View.VISIBLE
+            setupAutoComplete()
         } else {
             TransitionManager.beginDelayedTransition(container)
             methodLabel.visibility = View.GONE
+
+            //Set hint
+            methodLabel.hint = BUS_NUMBER_HINT
+            method.hint = BUS_NUMBER_HINT
+
+            //Watches for changes in user input
+            //todo: Add in next update
+            method.addTextChangedListener(object : TextWatcher {
+                override fun afterTextChanged(s: Editable?) {}
+
+                override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+
+                override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
+            })
         }
 
         username.setText(user.email)
@@ -145,6 +159,11 @@ class RegisterActivity : Activity() {
                 uploadImages()
             }
 
+            //todo: add in update
+            /*user is Driver && !hasProperBusNumber() -> {
+
+            }*/
+
         //Ready to go
             else -> {
                 loading.show()
@@ -153,33 +172,58 @@ class RegisterActivity : Activity() {
         }
     }
 
-    private fun uploadUser() {
-        val userUpdate = hashMapOf(
-                Pair<String, Any>("phone", phone.text.toString()),
-                Pair<String, Any>("username", username.text.toString()),
-                Pair<String, Any>("profile", Profile(imageUri, imageUri, imageUri))
-        )
+    private fun hasProperBusNumber(): Boolean {
+        val busNumber = method.text.toString()
+        //todo: add in update
+        return false
+    }
 
-        if (methodLabel.visibility == View.VISIBLE && method.text.isNotEmpty()) {
-            userUpdate.plus(Pair<String, Any>("payment", method.text.toString()))
-        }
-        try {
+    private fun uploadUser() {
+        //User is a passenger
+        if (user is Passenger) {
+            //Cast user to passenger class
+            val newUser = user as Passenger
+            val passenger = Passenger(newUser.key, username.text.toString(), newUser.email, phone.text.toString(),
+                    method.text.toString(), Profile(imageUri, imageUri, imageUri), newUser.location)
+
+            //Upload Passenger
             prefs.db.collection(TripMateUtils.USER_REF)
                     .document(prefs.getAccessToken())
-                    .update(userUpdate)
+                    .set(passenger)
                     .addOnCompleteListener(this@RegisterActivity, { task ->
                         if (task.isSuccessful) {
                             if (loading.isShowing) loading.dismiss()
                             val intent = Intent(this@RegisterActivity, HomeActivity::class.java)
-                            intent.putExtra(HomeActivity.EXTRA_USER, user)
+                            intent.putExtra(HomeActivity.EXTRA_USER, passenger)
                             startActivity(intent)
+                            finish()
                         }
                     }).addOnFailureListener(this@RegisterActivity, { exception ->
                         showFailed(exception.localizedMessage)
                     })
-        } catch (e: Exception) {
-            showFailed(e.localizedMessage)
+        } else {
+            //Cast user to driver class
+            val newUser = user as Driver
+            val driver = Driver(newUser.key, newUser.username, newUser.email, phone.text.toString(),
+                    null, method.text.toString(), null, null, Profile(imageUri, imageUri, imageUri))
+
+            //Upload Driver
+            prefs.db.collection(TripMateUtils.USER_REF)
+                    .document(prefs.getAccessToken())
+                    .set(driver)
+                    .addOnCompleteListener(this@RegisterActivity, { task ->
+                        if (task.isSuccessful) {
+                            if (loading.isShowing) loading.dismiss()
+                            val intent = Intent(this@RegisterActivity, HomeActivity::class.java)
+                            intent.putExtra(HomeActivity.EXTRA_USER, driver)
+                            startActivity(intent)
+                            finish()
+                        }
+                    }).addOnFailureListener(this@RegisterActivity, { exception ->
+                        showFailed(exception.localizedMessage)
+                    })
         }
+
     }
 
     private fun uploadImages() {
@@ -257,6 +301,7 @@ class RegisterActivity : Activity() {
 
     companion object {
         const val EXTRA_USER = "EXTRA_USER"
+        const val BUS_NUMBER_HINT = "Bus number (eg: GT-1928-18)"
         private const val STORAGE_REQ_CODE = 17
         private const val GALLERY_REQ_CODE = 18
     }

@@ -53,8 +53,6 @@ class AuthActivity : Activity() {
         dataManager = object : AllUserDataManager(this) {
             override fun onDataLoaded(data: List<User>) {
                 if (data.isEmpty()) {
-                    showLoginFailed("There are no registered users yet")
-                    username.requestFocus()
                     showOptionsDialog()
                     return
                 } else {
@@ -78,11 +76,18 @@ class AuthActivity : Activity() {
                                 showLoginFailed(e.localizedMessage)
                             }
                             break
+                        } else {
+                            showOptionsDialog()
+                            break
                         }
                     }
 
+
+                    //Dismiss loading dialog
                     loading.dismiss()
-                    if (prefs.isLoggedIn) {//Parse user item and send data to HomeActivity
+                    //Check user login state
+                    if (prefs.isLoggedIn) {
+                        //Parse user item and send data to HomeActivity
                         val homeIntent = Intent(this@AuthActivity, HomeActivity::class.java)
                         homeIntent.putExtra(HomeActivity.EXTRA_USER, user)
                         startActivity(homeIntent)
@@ -185,7 +190,11 @@ class AuthActivity : Activity() {
 
     private fun showLoginFailed(message: String?) {
         if (loading.isShowing) loading.dismiss()
-        Snackbar.make(container, "Drush! $message", Snackbar.LENGTH_LONG).show()
+        if (message == null) {
+            Toast.makeText(this@AuthActivity, message, Toast.LENGTH_LONG).show()
+        } else {
+            Snackbar.make(container, message, Snackbar.LENGTH_LONG).show()
+        }
     }
 
     fun doLogin(v: View) {

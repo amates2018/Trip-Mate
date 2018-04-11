@@ -32,7 +32,7 @@
 	<string name="register_desc">Tell us more about yourself</string>
 	<string name="username">First name &amp; Surname </string>
 	<string name="phone">Phone Number</string>
-	<string name="payment_method">Payment Method</string>
+	<string name="payment_method">Payment Method (eg: Airtel)</string>
 	<string name="prompt_phone_error">Invalid phone number</string>
 	<string name="prompt_method_error">Invalid payment method</string>
 	<string name="transition_search_back">transition_search_back</string>
@@ -48,4 +48,6 @@
 	<string name="date_dialog_header">Select day of trip</string>
 	<string name="available">Available</string>
 	<string name="booked">Booked</string>
+	<string name="profile">Profile</string>
+	<string name="enter_content_here">Enter content here</string>
 </resources>

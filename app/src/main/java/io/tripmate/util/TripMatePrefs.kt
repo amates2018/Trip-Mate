@@ -84,6 +84,11 @@ class TripMatePrefs private constructor(private val context: Context) {
         return prefs.getString(KEY_ACCESS_TOKEN, null)
     }
 
+    //todo: update
+    fun getUserType(): UserType {
+        return UserType.valueOf(prefs.getString(KEY_USER_TYPE, UserType.TYPE_PASSENGER.type))
+    }
+
     /**
      * Logout any currently logged in user
      */

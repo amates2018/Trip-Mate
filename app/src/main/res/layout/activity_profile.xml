@@ -1,9 +1,270 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
 	xmlns:app="http://schemas.android.com/apk/res-auto"
 	xmlns:tools="http://schemas.android.com/tools"
+	android:id="@+id/main"
 	android:layout_width="match_parent"
 	android:layout_height="match_parent"
+	android:orientation="vertical"
 	tools:context="io.tripmate.ui.ProfileActivity">
+	
+	<LinearLayout
+		android:id="@+id/toolbar"
+		android:layout_width="match_parent"
+		android:layout_height="?android:actionBarSize"
+		android:background="@color/background_super_dark"
+		android:orientation="horizontal"
+		android:weightSum="5">
+		
+		<ImageButton
+			android:id="@+id/toolbar_back"
+			android:layout_width="0dp"
+			android:layout_height="wrap_content"
+			android:layout_weight="1"
+			android:background="?selectableItemBackground"
+			android:padding="@dimen/padding_normal"
+			android:src="@drawable/ic_keyboard_backspace"
+			tools:ignore="ContentDescription" />
+		
+		<io.peanutsdk.widget.BaselineGridTextView
+			android:id="@+id/toolbar_text"
+			android:layout_width="0dp"
+			android:layout_height="match_parent"
+			android:layout_weight="3"
+			android:gravity="center_vertical|start"
+			android:textAlignment="gravity"
+			android:textAppearance="@style/TextAppearance.DribbbleShotDescription"
+			android:textColor="@color/text_primary_light"
+			app:fontFamily="@font/nunito_semibold"
+			tools:text="Page title goes here" />
+		
+		<ImageButton
+			android:id="@+id/toolbar_save"
+			android:layout_width="0dp"
+			android:layout_height="wrap_content"
+			android:layout_weight="1"
+			android:background="?selectableItemBackground"
+			android:padding="@dimen/padding_normal"
+			android:src="@drawable/ic_save"
+			tools:ignore="ContentDescription" />
+	
+	</LinearLayout>
+	
+	<ScrollView
+		android:layout_width="match_parent"
+		android:layout_height="match_parent">
+		
+		<LinearLayout
+			android:id="@+id/container"
+			android:layout_width="match_parent"
+			android:layout_height="match_parent"
+			android:gravity="center_horizontal"
+			android:orientation="vertical"
+			android:weightSum="2">
+			
+			<RelativeLayout
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:layout_weight="1"
+				android:paddingBottom="@dimen/padding_normal"
+				android:paddingTop="@dimen/padding_normal">
+				
+				<io.peanutsdk.widget.ForegroundImageView
+					android:id="@+id/profile"
+					android:layout_width="@dimen/large_avatar_height"
+					android:layout_height="@dimen/large_avatar_height"
+					android:layout_alignParentTop="true"
+					android:layout_centerHorizontal="true"
+					android:layout_marginBottom="@dimen/padding_normal"
+					android:src="@drawable/avatar_placeholder" />
+				
+				<io.peanutsdk.widget.BaselineGridTextView
+					android:id="@+id/username"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:layout_below="@id/profile"
+					android:padding="@dimen/spacing_normal"
+					android:textAlignment="center"
+					android:textAppearance="@style/TextAppearance.Author.Title"
+					tools:text="Quabynah Bilson" />
+				
+				<io.peanutsdk.widget.BaselineGridTextView
+					android:id="@+id/email"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:layout_below="@id/username"
+					android:textAlignment="center"
+					android:textAppearance="@style/TextAppearance.CommentTimestamp"
+					android:textColor="@color/text_secondary_dark"
+					tools:text="email@google.com" />
+			
+			</RelativeLayout>
+			
+			<RelativeLayout
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:layout_weight="1">
+				
+				<!--Location-->
+				<io.peanutsdk.widget.ForegroundLinearLayout
+					android:id="@+id/layout_location"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:layout_alignParentEnd="true"
+					android:layout_alignParentStart="true"
+					android:layout_alignParentTop="true"
+					android:layout_marginStart="@dimen/spacing_normal"
+					android:layout_marginTop="@dimen/padding_dialog"
+					android:orientation="vertical"
+					android:padding="@dimen/padding_normal">
+					
+					<io.peanutsdk.widget.BaselineGridTextView
+						android:layout_width="wrap_content"
+						android:layout_height="wrap_content"
+						android:text="Your location"
+						android:textAppearance="@style/TextAppearance.DribbbleShotTitle"
+						android:textSize="18sp"
+						app:fontFamily="@font/nunito_semibold" />
+					
+					<io.peanutsdk.widget.BaselineGridTextView
+						android:id="@+id/location"
+						android:layout_width="match_parent"
+						android:layout_height="wrap_content"
+						android:clickable="true"
+						android:drawableEnd="@drawable/ic_edit"
+						android:drawablePadding="@dimen/padding_normal"
+						android:focusable="true"
+						android:gravity="start"
+						android:paddingBottom="@dimen/spacing_normal"
+						android:paddingTop="@dimen/spacing_normal"
+						android:textAppearance="@style/TextAppearance.DribbbleShotDescription"
+						android:textColor="@color/text_secondary_dark"
+						tools:text="Madina, Accra" />
+				
+				</io.peanutsdk.widget.ForegroundLinearLayout>
+				
+				<!--Phone-->
+				<io.peanutsdk.widget.ForegroundLinearLayout
+					android:id="@+id/layout_phone"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:layout_alignParentEnd="true"
+					android:layout_alignParentStart="true"
+					android:layout_below="@id/layout_location"
+					android:layout_marginStart="@dimen/spacing_normal"
+					android:orientation="vertical"
+					android:padding="@dimen/padding_normal">
+					
+					<io.peanutsdk.widget.BaselineGridTextView
+						android:layout_width="wrap_content"
+						android:layout_height="wrap_content"
+						android:text="Phone number"
+						android:textAppearance="@style/TextAppearance.DribbbleShotTitle"
+						android:textSize="18sp"
+						app:fontFamily="@font/nunito_semibold" />
+					
+					<io.peanutsdk.widget.BaselineGridTextView
+						android:id="@+id/phone"
+						android:layout_width="match_parent"
+						android:layout_height="wrap_content"
+						android:clickable="true"
+						android:drawableEnd="@drawable/ic_edit"
+						android:drawablePadding="@dimen/padding_normal"
+						android:focusable="true"
+						android:gravity="start"
+						android:paddingBottom="@dimen/spacing_normal"
+						android:paddingTop="@dimen/spacing_normal"
+						android:textAppearance="@style/TextAppearance.DribbbleShotDescription"
+						android:textColor="@color/text_secondary_dark"
+						tools:text="+23355441223" />
+				
+				</io.peanutsdk.widget.ForegroundLinearLayout>
+				
+				<!--Passenger details-->
+				<LinearLayout
+					android:id="@+id/profile_passenger"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:layout_alignParentEnd="true"
+					android:layout_alignParentStart="true"
+					android:layout_below="@id/layout_phone"
+					android:orientation="vertical"
+					android:visibility="gone"
+					android:layout_marginStart="@dimen/spacing_normal"
+					android:padding="@dimen/padding_normal">
+					
+					<!--Passenger payment method header-->
+					<io.peanutsdk.widget.BaselineGridTextView
+						android:layout_width="wrap_content"
+						android:layout_height="wrap_content"
+						android:text="Payment method"
+						android:textAppearance="@style/TextAppearance.DribbbleShotTitle"
+						android:textSize="18sp"
+						app:fontFamily="@font/nunito_semibold" />
+					
+					<!--Passenger payment method-->
+					<io.peanutsdk.widget.BaselineGridTextView
+						android:id="@+id/payment"
+						android:layout_width="match_parent"
+						android:layout_height="wrap_content"
+						android:clickable="true"
+						android:drawableEnd="@drawable/ic_edit"
+						android:drawablePadding="@dimen/padding_normal"
+						android:focusable="true"
+						android:gravity="start"
+						android:paddingBottom="@dimen/spacing_normal"
+						android:paddingTop="@dimen/spacing_normal"
+						android:textAppearance="@style/TextAppearance.DribbbleShotDescription"
+						android:textColor="@color/text_secondary_dark"
+						tools:text="MTN Mobile Money" />
+				
+				</LinearLayout>
+				
+				
+				<!--Driver details-->
+				<LinearLayout
+					android:id="@+id/profile_driver"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:layout_alignParentEnd="true"
+					android:layout_alignParentStart="true"
+					android:layout_below="@id/layout_phone"
+					android:orientation="vertical"
+					android:visibility="gone"
+					android:layout_marginStart="@dimen/spacing_normal"
+					android:padding="@dimen/padding_normal">
+					
+					<!--Passenger payment method header-->
+					<io.peanutsdk.widget.BaselineGridTextView
+						android:layout_width="wrap_content"
+						android:layout_height="wrap_content"
+						android:text="Bus terminal"
+						android:textAppearance="@style/TextAppearance.DribbbleShotTitle"
+						android:textSize="18sp"
+						app:fontFamily="@font/nunito_semibold" />
+					
+					<!--Passenger payment method-->
+					<io.peanutsdk.widget.BaselineGridTextView
+						android:id="@+id/terminal"
+						android:layout_width="match_parent"
+						android:layout_height="wrap_content"
+						android:clickable="true"
+						android:drawableEnd="@drawable/ic_edit"
+						android:drawablePadding="@dimen/padding_normal"
+						android:focusable="true"
+						android:gravity="start"
+						android:paddingBottom="@dimen/spacing_normal"
+						android:paddingTop="@dimen/spacing_normal"
+						android:textAppearance="@style/TextAppearance.DribbbleShotDescription"
+						android:textColor="@color/text_secondary_dark"
+						tools:text="Circle VVIP" />
+				
+				</LinearLayout>
+			
+			</RelativeLayout>
+		
+		</LinearLayout>
+	
+	</ScrollView>
 
-</android.support.constraint.ConstraintLayout>
+</LinearLayout>

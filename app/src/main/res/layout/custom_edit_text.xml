@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<EditText xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:tools="http://schemas.android.com/tools"
+	android:id="@+id/edit_text"
+	android:layout_width="match_parent"
+	android:layout_height="wrap_content"
+	android:layout_marginEnd="@dimen/padding_normal"
+	android:layout_marginStart="@dimen/padding_normal"
+	android:fontFamily="@font/nunito_semibold"
+	tools:text="My nice message"
+	android:textColor="@color/text_secondary_dark"
+	android:hint="@string/enter_content_here"
+	android:inputType="text"
+	android:padding="@dimen/padding_normal" />

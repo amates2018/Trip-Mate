@@ -139,6 +139,7 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             val email = headerView.findViewById<TextView>(R.id.user_email)
 
             if (prefs.isLoggedIn) {
+                //Load profile image
                 GlideApp.with(this)
                         .asBitmap()
                         .load(user.profile?.regular)
@@ -150,13 +151,15 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                         .transition(withCrossFade())
                         .into(profile)
 
+                //Load username and email address
                 username.text = user.username
                 email.text = user.email
 
+                //navigate to the profile screen
                 profile.setOnClickListener({
                     val intent = Intent(this@HomeActivity, ProfileActivity::class.java)
                     intent.putExtra(ProfileActivity.EXTRA_USER, user)
-                    startActivity(intent)
+                    startActivityForResult(intent, EXTRA_PROFILE)
                 })
             } else {
                 profile.visibility = View.INVISIBLE
@@ -214,8 +217,11 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                             .positiveText("Logout")
                             .negativeText("Cancel")
                             .onPositive({ dialog, _ ->
+                                //Log user out and navigate to the login screen
                                 dialog.dismiss()
                                 prefs.logout()
+                                startActivity(Intent(this@HomeActivity, AuthActivity::class.java))
+                                finishAfterTransition()
                             })
                             .onNegative({ dialog, _ ->
                                 dialog.dismiss()
@@ -245,7 +251,9 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 startActivity(Intent(this@HomeActivity, SettingsActivity::class.java))
             }
             R.id.nav_profile -> {
-                startActivity(Intent(this@HomeActivity, ProfileActivity::class.java))
+                val intent = Intent(this@HomeActivity, ProfileActivity::class.java)
+                intent.putExtra(ProfileActivity.EXTRA_USER, user)
+                startActivityForResult(intent, EXTRA_PROFILE)
             }
         }
 
@@ -269,6 +277,7 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     companion object {
         const val EXTRA_USER = "EXTRA_USER"
+        const val EXTRA_PROFILE = 2
         const val REQ_USER_AUTH = 213
     }
 }

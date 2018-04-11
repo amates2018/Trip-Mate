@@ -4,6 +4,7 @@
 	xmlns:tools="http://schemas.android.com/tools"
 	android:layout_width="match_parent"
 	android:layout_height="match_parent"
+	app:layout_behavior="@string/appbar_scrolling_view_behavior"
 	tools:context="io.tripmate.ui.RegisterActivity">
 	
 	<View
@@ -83,7 +84,7 @@
 				android:layout_height="wrap_content"
 				android:fontFamily="@font/nunito_semibold"
 				android:hint="@string/phone"
-				android:imeOptions="actionNext"
+				android:imeOptions="actionNext|actionDone"
 				android:inputType="phone"
 				android:textColor="@color/text_secondary_dark"
 				tools:text="0554022344" />
@@ -94,8 +95,8 @@
 			android:id="@+id/payment_content_label"
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
-			android:visibility="gone"
 			android:layout_gravity="center_horizontal"
+			android:visibility="visible"
 			app:hintTextAppearance="@style/TextAppearance.FloatLabelHint">
 			
 			<AutoCompleteTextView

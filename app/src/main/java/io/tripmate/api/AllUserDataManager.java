@@ -81,7 +81,8 @@ public abstract class AllUserDataManager extends BaseDataManager<List<? extends 
 					inflight.remove(query);
 				}
 			}
-		}).addOnFailureListener(context, e -> {
+		})
+				.addOnFailureListener(context, e -> {
 			loadFinished();
 			onDataLoaded(users);
 			inflight.remove(query);

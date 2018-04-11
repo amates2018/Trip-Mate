@@ -1,1 +1,1 @@
-[{"outputType":{"type":"APK"},"apkInfo":{"type":"MAIN","splits":[],"versionCode":2},"path":"trip-mate-release.apk","properties":{"packageId":"io.tripmate","split":"","minSdkVersion":"21"}}]
+[{"outputType":{"type":"APK"},"apkInfo":{"type":"MAIN","splits":[],"versionCode":8,"versionName":"8dfd0c3-beta","enabled":true,"outputFile":"trip-mate-release.apk","fullName":"release","baseName":"release"},"path":"trip-mate-release.apk","properties":{}}]
