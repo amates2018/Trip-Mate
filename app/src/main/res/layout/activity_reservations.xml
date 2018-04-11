@@ -4,6 +4,37 @@
 	xmlns:tools="http://schemas.android.com/tools"
 	android:layout_width="match_parent"
 	android:layout_height="match_parent"
+	android:background="@color/background_super_dark"
 	tools:context="io.tripmate.ui.ReservationsActivity">
+	
+	<include
+		layout="@layout/header_toolbar"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toTopOf="parent" />
+	
+	<LinearLayout
+		android:id="@+id/container"
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		android:layout_marginTop="?android:actionBarSize"
+		android:background="@color/background_light"
+		android:orientation="vertical">
+		
+		<android.support.v4.widget.SwipeRefreshLayout
+			android:id="@+id/swipe_reservations"
+			android:layout_width="match_parent"
+			android:layout_height="match_parent">
+			
+			<android.support.v7.widget.RecyclerView
+				android:id="@+id/grid_reservations"
+				android:layout_width="match_parent"
+				android:layout_height="match_parent"
+				android:scrollbarStyle="outsideOverlay"
+				android:scrollbars="vertical" />
+		
+		</android.support.v4.widget.SwipeRefreshLayout>
+	
+	</LinearLayout>
 
 </android.support.constraint.ConstraintLayout>

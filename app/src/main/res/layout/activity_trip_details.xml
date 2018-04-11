@@ -187,6 +187,7 @@
 					
 					
 					<io.peanutsdk.widget.BaselineGridTextView
+						android:id="@+id/trip_duration"
 						android:layout_width="wrap_content"
 						android:layout_height="wrap_content"
 						android:layout_marginTop="@dimen/spacing_micro"
@@ -243,24 +244,26 @@
 						android:layout_width="wrap_content"
 						android:layout_height="wrap_content"
 						android:layout_marginStart="@dimen/padding_normal"
+						android:textColor="@color/text_secondary_dark"
+						android:textSize="18sp"
+						android:layout_marginTop="@dimen/spacing_normal"
+						app:fontFamily="@font/nunito_semibold"
 						app:layout_constraintStart_toEndOf="@id/driver_profile"
 						app:layout_constraintTop_toBottomOf="@id/card_driver_header"
-						tools:text="Opanin Kwame Sefa Duah"
-						android:textSize="18sp"
-						app:fontFamily="@font/nunito_semibold"
-						android:textColor="@color/text_secondary_dark"/>
+						tools:text="Opanin Kwame Sefa Duah" />
 					
 					<io.peanutsdk.widget.BaselineGridTextView
+						android:id="@+id/terminal_name"
 						android:layout_width="wrap_content"
 						android:layout_height="wrap_content"
 						android:layout_marginStart="@dimen/padding_normal"
+						android:textColor="@color/text_tertiary_dark"
+						android:textSize="16sp"
+						app:fontFamily="@font/nunito_semibold"
 						app:layout_constraintBottom_toBottomOf="parent"
 						app:layout_constraintStart_toEndOf="@id/driver_profile"
 						app:layout_constraintTop_toBottomOf="@id/driver_username"
-						tools:text="Circle Bus Terminal"
-						android:textSize="16sp"
-						app:fontFamily="@font/nunito_semibold"
-						android:textColor="@color/text_tertiary_dark"/>
+						tools:text="Circle Bus Terminal" />
 				
 				</android.support.constraint.ConstraintLayout>
 			

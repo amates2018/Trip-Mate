@@ -1,23 +1,31 @@
 package io.tripmate.ui
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.os.Bundle
 import android.support.design.widget.BaseTransientBottomBar
 import android.support.design.widget.Snackbar
+import android.util.Log
 import android.view.ViewGroup
 import android.widget.ImageButton
 import android.widget.TextView
 import android.widget.Toast
 import com.afollestad.materialdialogs.MaterialDialog
+import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.bumptech.glide.request.target.Target
 import io.peanutsdk.util.bindView
+import io.peanutsdk.widget.ForegroundImageView
+import io.tripmate.BuildConfig
 import io.tripmate.R
 import io.tripmate.api.UserDataManager
 import io.tripmate.data.Passenger
 import io.tripmate.data.Reservation
 import io.tripmate.data.Trip
+import io.tripmate.util.GlideApp
 import io.tripmate.util.TripMatePrefs
 import io.tripmate.util.TripMateUtils
 import io.tripmate.util.User
+import java.text.NumberFormat
 import java.util.*
 
 /**
@@ -32,10 +40,20 @@ class TripDetailsActivity : Activity() {
     private val toolbar: ViewGroup by bindView(R.id.back_wrapper)
 
     //Card #1: Trip details
+    private val originHeader: TextView by bindView(R.id.trip_origin_header)
+    private val originContent: TextView by bindView(R.id.trip_origin_content)
+    private val destHeader: TextView by bindView(R.id.trip_dest_header)
+    private val destContent: TextView by bindView(R.id.trip_dest_content)
 
     //Card #2: Bus and duration details
+    private val busName: TextView by bindView(R.id.bus_name)
+    private val busNumber: TextView by bindView(R.id.bus_number)
+    private val tripDuration: TextView by bindView(R.id.trip_duration)
 
     //Card #3: Driver details
+    private val driverProfile: ForegroundImageView by bindView(R.id.driver_profile)
+    private val driverName: TextView by bindView(R.id.driver_username)
+    private val terminalName: TextView by bindView(R.id.terminal_name)
 
     //Misc
     private lateinit var prefs: TripMatePrefs
@@ -59,8 +77,10 @@ class TripDetailsActivity : Activity() {
         title.text = getString(R.string.trip_details)
         menu.setImageDrawable(resources.getDrawable(R.drawable.ic_event_add))
 
+        //Data manager for loading user instance
         dataManager = object : UserDataManager(this@TripDetailsActivity) {
             override fun onDataLoaded(data: User) {
+                if (loading.isShowing) loading.dismiss()
                 user = data as Passenger
             }
         }
@@ -78,9 +98,10 @@ class TripDetailsActivity : Activity() {
         }
     }
 
+    //Adds trip to reservations
     private fun addTrip(trip: Trip) {
         //add to reservations
-        val snackbar = Snackbar.make(main, "Added successfully to reservations", Snackbar.LENGTH_LONG)
+        val snackbar = Snackbar.make(main, "Adding trip to your reservations", Snackbar.LENGTH_LONG)
         snackbar.setAction("Undo", { _ ->
             snackbar.dismiss()
         })
@@ -97,7 +118,8 @@ class TripDetailsActivity : Activity() {
                     document.set(reservation)
                             .addOnCompleteListener(this@TripDetailsActivity, { task ->
                                 if (task.isSuccessful) {
-                                    
+                                    if (BuildConfig.DEBUG)
+                                        Log.d("TripDetailsActivity", "Added trip successfully")
                                 } else {
                                     showError(task.exception?.localizedMessage)
                                 }
@@ -114,10 +136,38 @@ class TripDetailsActivity : Activity() {
     }
 
 
+    @SuppressLint("SetTextI18n")
     private fun bindTrip(trip: Trip?) {
         if (trip == null) return
 
-        Toast.makeText(applicationContext, trip.toString(), Toast.LENGTH_SHORT).show()
+        //Set origin
+        originHeader.text = trip.origin
+        originContent.text = trip.origin?.substring(0, 3)?.toUpperCase()
+
+        //Set destination
+        destHeader.text = trip.destination
+        destContent.text = trip.destination?.substring(0, 3)?.toUpperCase()
+
+        //bus details
+        val bus = trip.bus
+        busName.text = bus?.type
+        busNumber.text = bus?.number
+        tripDuration.text = "${NumberFormat.getNumberInstance().format(trip.duration)} hrs"
+
+        //Driver details
+        val driver = trip.driver
+        GlideApp.with(applicationContext)
+                .load(driver?.profile)
+                .circleCrop()
+                .placeholder(R.drawable.avatar_placeholder)
+                .error(R.drawable.avatar_placeholder)
+                .override(Target.SIZE_ORIGINAL, Target.SIZE_ORIGINAL)
+                .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC)
+                .into(driverProfile)
+        driverName.text = driver?.username
+        terminalName.text = driver?.terminalKey
+
+
     }
 
     override fun onDestroy() {
