@@ -18,34 +18,36 @@ class Driver : User {
     var busNumber: String? = null
     var busType: String? = null
     var terminalKey: String? = null
+    var isTracking: Boolean = false
 
+    constructor()
 
     constructor(parcel: Parcel) : this() {
         key = parcel.readString()
         username = parcel.readString()
         email = parcel.readString()
         phone = parcel.readString()
+        profile = parcel.readParcelable(Profile::class.java.classLoader)
         busKey = parcel.readString()
         busNumber = parcel.readString()
         busType = parcel.readString()
         terminalKey = parcel.readString()
-        profile = parcel.readParcelable(Profile::class.java.classLoader)
+        isTracking = parcel.readValue(Boolean::class.java.classLoader) as Boolean
     }
 
-    constructor()
-
     constructor(key: String?, username: String?, email: String?, phone: String?,
-                busKey: String?, busNumber: String?, busType: String?,
-                terminalKey: String?, profile: Profile?) {
+                profile: Profile?, busKey: String?, busNumber: String?, busType: String?,
+                terminalKey: String?, isTracking: Boolean = false) {
         this.key = key
         this.username = username
         this.email = email
         this.phone = phone
+        this.profile = profile
         this.busKey = busKey
         this.busNumber = busNumber
         this.busType = busType
         this.terminalKey = terminalKey
-        this.profile = profile
+        this.isTracking = isTracking
     }
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
@@ -53,19 +55,16 @@ class Driver : User {
         parcel.writeString(username)
         parcel.writeString(email)
         parcel.writeString(phone)
+        parcel.writeParcelable(profile, flags)
         parcel.writeString(busKey)
         parcel.writeString(busNumber)
         parcel.writeString(busType)
         parcel.writeString(terminalKey)
-        parcel.writeParcelable(profile, flags)
+        parcel.writeValue(isTracking)
     }
 
     override fun describeContents(): Int {
         return 0
-    }
-
-    override fun toString(): String {
-        return "Driver(key=$key, username=$username, email=$email, phone=$phone, profile=$profile, busKey=$busKey, busNumber=$busNumber, busType=$busType, terminalKey=$terminalKey)"
     }
 
     companion object CREATOR : Parcelable.Creator<Driver> {

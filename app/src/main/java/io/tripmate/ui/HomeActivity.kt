@@ -18,7 +18,6 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.widget.ImageView
-import android.widget.ProgressBar
 import android.widget.TextView
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.Theme
@@ -34,6 +33,7 @@ import io.tripmate.data.Trip
 import io.tripmate.util.GlideApp
 import io.tripmate.util.TripMatePrefs
 import io.tripmate.util.User
+import io.tripmate.util.UserType
 
 /**
  * Home screen for application
@@ -44,7 +44,6 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     private val navView: NavigationView by bindView(R.id.nav_view)
     private val swipe: SwipeRefreshLayout by bindView(R.id.swipe_home)
     private val grid: RecyclerView by bindView(R.id.grid_home)
-    private val loading: ProgressBar by bindView(R.id.loading)
 
     private lateinit var headerView: View
     private lateinit var prefs: TripMatePrefs
@@ -82,6 +81,13 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             userDataManager.loadCurrentUser(prefs.getAccessToken())
         }
 
+        try {
+            val menu = navView.menu
+            val navSettings = menu?.findItem(R.id.nav_settings)
+            navSettings?.isVisible = prefs.isLoggedIn && prefs.getUserType() == UserType.TYPE_DRIVER
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
         navView.setNavigationItemSelectedListener(this)
         setupGrid()
     }
@@ -117,12 +123,10 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         if (adapter.dataItemCount() > 0) {
             //Items exists, show loading dialog
             TransitionManager.beginDelayedTransition(drawer)
-            loading.visibility = View.GONE
             if (swipe.isRefreshing) swipe.isRefreshing = false
         } else {
             //No items in the database, hide loading dialog
             TransitionManager.beginDelayedTransition(drawer)
-            loading.visibility = View.VISIBLE
             if (swipe.isRefreshing) swipe.isRefreshing = false
         }
     }
@@ -248,7 +252,9 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 startActivity(Intent(this@HomeActivity, ReservationsActivity::class.java))
             }
             R.id.nav_settings -> {
-                startActivity(Intent(this@HomeActivity, SettingsActivity::class.java))
+                val intent = Intent(this@HomeActivity, SettingsActivity::class.java)
+                intent.putExtra(SettingsActivity.EXTRA_USER, user)
+                startActivityForResult(intent, EXTRA_PROFILE)
             }
             R.id.nav_profile -> {
                 val intent = Intent(this@HomeActivity, ProfileActivity::class.java)

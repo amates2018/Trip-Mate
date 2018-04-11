@@ -24,16 +24,16 @@ import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions.withC
 import com.bumptech.glide.request.target.Target
 import com.google.android.gms.location.places.AutocompleteFilter
 import com.google.android.gms.location.places.ui.PlaceAutocomplete
+import com.google.firebase.firestore.GeoPoint
 import io.peanutsdk.util.bindView
 import io.peanutsdk.widget.ForegroundImageView
 import io.tripmate.R
+import io.tripmate.api.BusTerminalDataManager
 import io.tripmate.data.Driver
 import io.tripmate.data.Passenger
 import io.tripmate.data.Profile
-import io.tripmate.util.GlideApp
-import io.tripmate.util.TripMatePrefs
-import io.tripmate.util.TripMateUtils
-import io.tripmate.util.User
+import io.tripmate.data.Terminal
+import io.tripmate.util.*
 
 /**
  * User profile screen
@@ -46,10 +46,6 @@ class ProfileActivity : Activity() {
     private val profile: ForegroundImageView by bindView(R.id.profile)
     private val username: TextView by bindView(R.id.username)
     private val email: TextView by bindView(R.id.email)
-
-    //User specific
-    private val passengerContainer: ViewGroup by bindView(R.id.username)
-    private val driverContainer: ViewGroup by bindView(R.id.username)
 
     //Location
     private val locationContainer: ViewGroup by bindView(R.id.layout_location)
@@ -76,6 +72,9 @@ class ProfileActivity : Activity() {
     private lateinit var loading: MaterialDialog
     private var hasStoragePermission: Boolean = false
     private var imageUri: Uri? = null
+    private var geoPoint: GeoPoint? = null
+
+    private lateinit var dataManager: BusTerminalDataManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -96,6 +95,35 @@ class ProfileActivity : Activity() {
         if (intent.hasExtra(EXTRA_USER)) {
             val user = intent.getParcelableExtra<User>(EXTRA_USER)
             bindUser(user)
+        }
+
+        dataManager = object : BusTerminalDataManager(this@ProfileActivity) {
+            override fun onDataLoaded(data: List<Terminal>) {
+                if (loading.isShowing) loading.dismiss()
+                if (data.isEmpty()) {
+                    Toast.makeText(applicationContext, "No data found", Toast.LENGTH_SHORT).show()
+                    return
+                } else {
+                    val adapter = mutableListOf<String?>()
+                    for (terminal in data) {
+                        adapter.add(terminal.name)
+                    }
+
+                    MaterialDialog.Builder(this@ProfileActivity)
+                            .theme(Theme.LIGHT)
+                            .title("Choose bus terminal name")
+                            .items(adapter)
+                            .itemsCallback({ dialog, _, _, text ->
+                                dialog.dismiss()
+                                terminal.text = text
+                            })
+                            .negativeText("Dismiss")
+                            .onNegative({ dialog, _ ->
+                                dialog.dismiss()
+                            })
+                            .build().show()
+                }
+            }
         }
 
     }
@@ -132,10 +160,12 @@ class ProfileActivity : Activity() {
     }
 
     private fun uploadUser() {
+        //Get all fields
         val _username = username.text.toString()
         val _phone = phone.text.toString()
         val _email = email.text.toString()
-
+        val _payment = payment.text.toString()
+        val _terminal = terminal.text.toString()
 
         //Check internet connection
         if (prefs.isConnected) {
@@ -147,11 +177,21 @@ class ProfileActivity : Activity() {
 
                 //Set map for user data
                 val hashMap = hashMapOf(
-                        Pair("username", _username),
-                        Pair("email", _email),
-                        Pair("phone", _phone),
-                        Pair("profile", Profile(imageUri.toString(), imageUri.toString(), imageUri.toString()))
+                        Pair<String, Any?>("username", _username),
+                        Pair<String, Any?>("email", _email),
+                        Pair<String, Any?>("phone", _phone),
+                        Pair<String, Any?>("profile", Profile(imageUri.toString(), imageUri.toString(), imageUri.toString()))
                 )
+
+                //Update user specific data
+                if (prefs.getUserType() == UserType.TYPE_PASSENGER) {
+                    hashMap["payment"] = _payment
+                    if (geoPoint != null) {
+                        hashMap["location"] = geoPoint!!
+                    }
+                } else if (prefs.getUserType() == UserType.TYPE_DRIVER) {
+                    hashMap["terminalKey"] = _terminal
+                }
 
                 //Push data to database
                 userRef.document(accessToken)
@@ -210,8 +250,39 @@ class ProfileActivity : Activity() {
         //Add click action for phone, location & username
         phoneContainer.setOnClickListener({ v -> showDialogFor(v) })
         username.setOnClickListener({ v -> showDialogFor(v) })
-        terminalContainer.setOnClickListener({ v -> showDialogFor(v) })
         locationContainer.setOnClickListener({ pickLocation() })
+
+        paymentContainer.setOnClickListener({
+            //Array of payment methods
+            val methods = mutableListOf<String>(
+                    PaymentMethod.MTN_MOMO.value,
+                    PaymentMethod.CREDIT_CARD.value,
+                    PaymentMethod.AIRTEL_CASH.value,
+                    PaymentMethod.VODAFONE_MOMO.value,
+                    PaymentMethod.TIGO_CASH.value
+            )
+            MaterialDialog.Builder(this@ProfileActivity)
+                    .title("Choose payment method")
+                    .items(methods)
+                    .itemsCallback({ dialog, _, _, text ->
+                        dialog.dismiss()
+                        payment.text = text
+                    })
+                    .negativeText("Dismiss")
+                    .onNegative({ dialog, _ ->
+                        dialog.dismiss()
+                    })
+                    .build().show()
+        })
+
+        terminalContainer.setOnClickListener({
+            if (prefs.isConnected) {
+                loading.show()
+                dataManager.loadTerminals()
+            } else {
+                Toast.makeText(applicationContext, "No internet connection", Toast.LENGTH_SHORT).show()
+            }
+        })
 
         if (user is Passenger) {
             //Do passenger UI
@@ -221,6 +292,7 @@ class ProfileActivity : Activity() {
             setupDriverView(user as Driver)
         }
     }
+
 
     private fun requestStoragePermission() {
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
@@ -269,17 +341,11 @@ class ProfileActivity : Activity() {
                                 R.id.layout_phone -> {
                                     phone.text = content
                                 }
-                                R.id.profile_driver -> {
-
-                                }
-                                R.id.profile_passenger -> {
-                                    
-                                }
                                 else -> return@onPositive
                             }
                         }
                     })
-                    .build()
+                    .build().show()
         }
     }
 
@@ -317,6 +383,10 @@ class ProfileActivity : Activity() {
                     if (data != null) {
                         val place = PlaceAutocomplete.getPlace(this@ProfileActivity, data)
                         location.text = place.address
+
+                        //Create new geopoint for user location
+                        val latLng = place.latLng
+                        geoPoint = GeoPoint(latLng.latitude, latLng.longitude)
                     }
                 }
                 GALLERY_REQ_CODE -> {
@@ -344,6 +414,11 @@ class ProfileActivity : Activity() {
         } else if (shouldShowRequestPermissionRationale(Manifest.permission.READ_EXTERNAL_STORAGE)) {
             requestStoragePermission()
         }
+    }
+
+    override fun onDestroy() {
+        dataManager.cancelLoading()
+        super.onDestroy()
     }
 
     companion object {

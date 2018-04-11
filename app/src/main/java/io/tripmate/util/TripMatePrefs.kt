@@ -21,6 +21,7 @@ class TripMatePrefs private constructor(private val context: Context) {
 
     private var accessToken: String? = null
     private var userType: String? = null
+    private var isTracking: Boolean = false
     private var loginStateListeners: MutableList<LoginStateListener>? = null
 
     var isLoggedIn = false
@@ -48,11 +49,13 @@ class TripMatePrefs private constructor(private val context: Context) {
         db.firestoreSettings = firestoreSettings
 
         accessToken = prefs.getString(KEY_ACCESS_TOKEN, null)
+        isTracking = prefs.getBoolean(KEY_DRIVER_TRACKING, false)
 
         isLoggedIn = !accessToken.isNullOrEmpty()
         if (isLoggedIn) {
             accessToken = prefs.getString(KEY_ACCESS_TOKEN, null)
             userType = prefs.getString(KEY_USER_TYPE, null)
+            isTracking = prefs.getBoolean(KEY_DRIVER_TRACKING, false)
         }
 
         isConnected = getConnectionState()
@@ -72,16 +75,23 @@ class TripMatePrefs private constructor(private val context: Context) {
         this.accessToken = token
         this.userType = userType.name
         isLoggedIn = true
+        this.isTracking = false
         //Store locally
         val editor = prefs.edit()
-        editor.putString(KEY_ACCESS_TOKEN, accessToken).apply()
-        editor.putString(KEY_USER_TYPE, userType.name).apply()
+        editor.putString(KEY_ACCESS_TOKEN, accessToken)
+        editor.putString(KEY_USER_TYPE, userType.name)
+        editor.putBoolean(KEY_DRIVER_TRACKING, isTracking)
         editor.apply()
         dispatchLoginEvent()
     }
 
     fun getAccessToken(): String {
         return prefs.getString(KEY_ACCESS_TOKEN, null)
+    }
+
+    fun enableTracking(hasTracker: Boolean) {
+        isTracking = hasTracker
+        prefs.edit().putBoolean(KEY_DRIVER_TRACKING, hasTracker).apply()
     }
 
     //todo: update
@@ -97,11 +107,13 @@ class TripMatePrefs private constructor(private val context: Context) {
             auth.signOut()
 
             isLoggedIn = false
+            isTracking = false
             accessToken = null
             userType = null
             val editor = prefs.edit()
             editor.putString(KEY_ACCESS_TOKEN, accessToken)
             editor.putString(KEY_USER_TYPE, userType)
+            editor.putBoolean(KEY_DRIVER_TRACKING, isTracking)
             editor.apply()
             dispatchLogoutEvent()
         }
@@ -144,6 +156,7 @@ class TripMatePrefs private constructor(private val context: Context) {
     companion object {
         private const val KEY_ACCESS_TOKEN = "KEY_ACCESS_TOKEN"
         private const val KEY_USER_TYPE = "KEY_USER_TYPE"
+        private const val KEY_DRIVER_TRACKING = "KEY_DRIVER_TRACKING"
 
         @SuppressLint("StaticFieldLeak")
         @Volatile

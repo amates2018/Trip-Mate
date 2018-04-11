@@ -50,4 +50,7 @@
 	<string name="booked">Booked</string>
 	<string name="profile">Profile</string>
 	<string name="enter_content_here">Enter content here</string>
+	<string name="visibility">Visibility</string>
+	<string name="v_content_text">Tap here to enable us track your current trip with your
+		passengers</string>
 </resources>

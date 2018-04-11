@@ -1,21 +1,167 @@
 <?xml version="1.0" encoding="utf-8"?>
 <io.peanutsdk.widget.ForegroundRelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
 	xmlns:tools="http://schemas.android.com/tools"
+	android:id="@+id/container"
 	android:layout_width="match_parent"
 	android:layout_height="match_parent"
+	android:background="@color/background_super_dark"
 	tools:context="io.tripmate.ui.SettingsActivity">
 	
 	<View
 		android:layout_width="match_parent"
 		android:layout_height="match_parent"
+		android:layout_marginTop="?android:actionBarSize"
 		android:background="@color/background_light" />
 	
+	<!--Toolbar-->
 	<include
 		layout="@layout/header_toolbar"
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
-		android:layout_alignParentTop="true"
+		android:layout_alignParentEnd="true"
 		android:layout_alignParentStart="true"
-		android:layout_alignParentEnd="true"/>
+		android:layout_alignParentTop="true" />
+	
+	<!--Driver-->
+	<RelativeLayout
+		android:id="@+id/settings_driver"
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		android:layout_marginTop="?android:actionBarSize"
+		android:visibility="visible">
+		
+		<LinearLayout
+			android:id="@+id/container_driver"
+			android:layout_width="match_parent"
+			android:layout_height="match_parent"
+			android:orientation="vertical"
+			android:padding="@dimen/padding_normal">
+			
+			<io.peanutsdk.widget.BaselineGridTextView
+				android:id="@+id/v_header"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:gravity="start"
+				android:text="@string/visibility"
+				android:textAppearance="@style/TextAppearance.DribbbleShotTitle"
+				android:textSize="18sp"
+				app:fontFamily="@font/nunito_semibold" />
+			
+			<RelativeLayout
+				android:id="@+id/container_v_content"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content">
+				
+				<io.peanutsdk.widget.BaselineGridTextView
+					android:id="@+id/v_content"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_alignParentStart="true"
+					android:layout_alignParentTop="true"
+					android:layout_toStartOf="@id/v_toggle"
+					android:gravity="start"
+					android:paddingEnd="@dimen/spacing_normal"
+					android:paddingStart="0dp"
+					android:text="@string/v_content_text"
+					android:textAppearance="@style/TextAppearance.DribbbleShotDescription"
+					android:textSize="16sp"
+					app:fontFamily="@font/nunito_semibold" />
+				
+				<Switch
+					android:id="@+id/v_toggle"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_alignParentEnd="true"
+					android:layout_alignParentTop="true"
+					android:layout_centerVertical="true"
+					android:checked="false" />
+			
+			</RelativeLayout>
+			
+			<View
+				android:id="@+id/separator_1"
+				android:layout_width="match_parent"
+				android:layout_height="1dp"
+				android:layout_marginBottom="@dimen/spacing_normal"
+				android:layout_marginTop="@dimen/spacing_normal"
+				android:background="@color/mid_grey" />
+			
+			<io.peanutsdk.widget.BaselineGridTextView
+				android:id="@+id/n_header"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:gravity="start"
+				android:text="My Bus number"
+				android:textAppearance="@style/TextAppearance.DribbbleShotTitle"
+				android:textSize="18sp"
+				app:fontFamily="@font/nunito_semibold" />
+			
+			<io.peanutsdk.widget.BaselineGridTextView
+				android:id="@+id/n_content"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:drawableEnd="@drawable/ic_edit"
+				android:drawablePadding="@dimen/padding_normal"
+				android:gravity="start"
+				android:textAppearance="@style/TextAppearance.DribbbleShotDescription"
+				android:textSize="16sp"
+				app:fontFamily="@font/nunito_semibold"
+				tools:text="GT-238-16" />
+			
+			
+			<View
+				android:id="@+id/separator_2"
+				android:layout_width="match_parent"
+				android:layout_height="1dp"
+				android:layout_marginBottom="@dimen/spacing_normal"
+				android:layout_marginTop="@dimen/spacing_normal"
+				android:background="@color/mid_grey" />
+			
+			<io.peanutsdk.widget.BaselineGridTextView
+				android:id="@+id/s_header"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:gravity="start"
+				android:text="Total number of Seats"
+				android:textAppearance="@style/TextAppearance.DribbbleShotTitle"
+				android:textSize="18sp"
+				app:fontFamily="@font/nunito_semibold" />
+			
+			<io.peanutsdk.widget.BaselineGridTextView
+				android:id="@+id/s_content"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:drawableEnd="@drawable/ic_edit"
+				android:drawablePadding="@dimen/padding_normal"
+				android:gravity="start"
+				android:text="45"
+				android:textAppearance="@style/TextAppearance.DribbbleShotDescription"
+				android:textSize="16sp"
+				app:fontFamily="@font/nunito_semibold" />
+		
+		</LinearLayout>
+	
+	</RelativeLayout>
+	
+	<!--Passenger-->
+	<RelativeLayout
+		android:id="@+id/settings_passenger"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:layout_marginTop="?android:actionBarSize"
+		android:visibility="gone">
+		
+		<LinearLayout
+			android:id="@+id/container_passenger"
+			android:layout_width="match_parent"
+			android:layout_height="match_parent"
+			android:orientation="vertical"
+			android:padding="@dimen/padding_normal">
+		
+		
+		</LinearLayout>
+	
+	</RelativeLayout>
 
 </io.peanutsdk.widget.ForegroundRelativeLayout>

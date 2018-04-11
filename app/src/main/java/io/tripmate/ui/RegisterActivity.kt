@@ -159,10 +159,10 @@ class RegisterActivity : Activity() {
                 uploadImages()
             }
 
-            //todo: add in update
-            /*user is Driver && !hasProperBusNumber() -> {
+        //todo: add in update
+        /*user is Driver && !hasProperBusNumber() -> {
 
-            }*/
+        }*/
 
         //Ready to go
             else -> {
@@ -205,7 +205,8 @@ class RegisterActivity : Activity() {
             //Cast user to driver class
             val newUser = user as Driver
             val driver = Driver(newUser.key, newUser.username, newUser.email, phone.text.toString(),
-                    null, method.text.toString(), null, null, Profile(imageUri, imageUri, imageUri))
+                    Profile(imageUri, imageUri, imageUri), null, method.text.toString(),
+                    null, null)
 
             //Upload Driver
             prefs.db.collection(TripMateUtils.USER_REF)
