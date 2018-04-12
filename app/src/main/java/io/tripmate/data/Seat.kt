@@ -11,24 +11,24 @@ import io.tripmate.util.SearchableItem
 class Seat : SearchableItem, Parcelable {
     override var key: String? = null
     var booking: Long = 0L
-    var trip: Trip? = null
+    var bus: Bus? = null
     var isAvailable: Boolean = false
     var uid: String? = null
 
     constructor(parcel: Parcel) : this() {
         key = parcel.readString()
         booking = parcel.readLong()
-        trip = parcel.readParcelable(Trip::class.java.classLoader)
+        bus = parcel.readParcelable(Bus::class.java.classLoader)
         isAvailable = parcel.readByte() != 0.toByte()
         uid = parcel.readString()
     }
 
     constructor() {}
 
-    constructor(key: String, booking: Long, trip: Trip, isAvailable: Boolean, uid: String) {
+    constructor(key: String, booking: Long, bus: Bus, isAvailable: Boolean, uid: String) {
         this.key = key
         this.booking = booking
-        this.trip = trip
+        this.bus = bus
         this.isAvailable = isAvailable
         this.uid = uid
     }
@@ -36,7 +36,7 @@ class Seat : SearchableItem, Parcelable {
     override fun writeToParcel(parcel: Parcel, flags: Int) {
         parcel.writeString(key)
         parcel.writeLong(booking)
-        parcel.writeParcelable(trip, flags)
+        parcel.writeParcelable(bus, flags)
         parcel.writeByte(if (isAvailable) 1 else 0)
         parcel.writeString(uid)
     }

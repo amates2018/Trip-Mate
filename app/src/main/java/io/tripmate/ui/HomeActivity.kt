@@ -29,6 +29,8 @@ import io.peanutsdk.util.bindView
 import io.tripmate.R
 import io.tripmate.api.TripsDataManager
 import io.tripmate.api.UserDataManager
+import io.tripmate.data.Driver
+import io.tripmate.data.Passenger
 import io.tripmate.data.Trip
 import io.tripmate.util.GlideApp
 import io.tripmate.util.TripMatePrefs
@@ -69,6 +71,7 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             override fun onDataLoaded(data: User) {
                 user = data
                 setupHeader(user)
+                showUserDialog(data)
             }
         }
 
@@ -77,6 +80,7 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             user = intent.getParcelableExtra<User>(EXTRA_USER)
             headerView = navView.getHeaderView(0)
             setupHeader(user)
+            showUserDialog(user)
         } else if (prefs.isLoggedIn && prefs.isConnected) {
             userDataManager.loadCurrentUser(prefs.getAccessToken())
         }
@@ -90,6 +94,42 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         }
         navView.setNavigationItemSelectedListener(this)
         setupGrid()
+    }
+
+    //Show user dialog for a specific user type
+    private fun showUserDialog(user: User?) {
+        if (user != null) {
+            val builder = MaterialDialog.Builder(this@HomeActivity)
+                    .theme(Theme.DARK)
+                    .positiveText("Dismiss")
+                    .title("Welcome, ${user.username}")
+                    .onPositive({ dialog, _ ->
+                        dialog.dismiss()
+                    })
+
+            when (user) {
+                is Passenger -> {
+                    builder.content("${getString(R.string.app_name)} has a lot to offer to you. " +
+                            "Open the drawer to your left to check your trip reservations, buy " +
+                            "tickets and update your profile information. Happy travelling!")
+                }
+                is Driver -> {
+                    builder.content("${getString(R.string.app_name)} has a lot to offer to you. " +
+                            "Open the drawer to your left to manage all trip reserved by " +
+                            "passengers onboard. For freshers, you need to update your profile " +
+                            "information to help us locate you and provide full support for our " +
+                            "services")
+                    builder.negativeText("My profile")
+                            .onNegative({ dialog, _ ->
+                                dialog.dismiss()
+                                startActivity(Intent(this@HomeActivity, ProfileActivity::class.java))
+                            })
+                }
+            }
+
+            //Finally, show the dialog
+            builder.build().show()
+        }
     }
 
     private fun setupGrid() {

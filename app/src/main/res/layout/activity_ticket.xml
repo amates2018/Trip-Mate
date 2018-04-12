@@ -1,9 +1,293 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
 	xmlns:tools="http://schemas.android.com/tools"
+	android:id="@+id/container"
 	android:layout_width="match_parent"
 	android:layout_height="match_parent"
 	android:background="@color/background_super_dark"
 	tools:context="io.tripmate.ui.TicketActivity">
+	
+	<include
+		layout="@layout/header_toolbar"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toTopOf="parent" />
+	
+	<LinearLayout
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		android:layout_marginTop="?android:actionBarSize"
+		android:background="@color/background_card"
+		android:orientation="vertical">
+		
+		<android.support.constraint.ConstraintLayout
+			android:id="@+id/layout_content_trip"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:paddingBottom="@dimen/padding_normal"
+			android:paddingTop="@dimen/padding_normal">
+			
+			<io.peanutsdk.widget.BaselineGridTextView
+				android:id="@+id/trip_origin_header"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_marginTop="@dimen/spacing_normal"
+				android:gravity="start"
+				android:textAppearance="@style/TextAppearance.DribbbleShotDescription"
+				android:textColor="@color/text_secondary_dark"
+				app:fontFamily="@font/nunito_semibold"
+				app:layout_constraintEnd_toStartOf="@id/trip_content_img"
+				app:layout_constraintStart_toStartOf="parent"
+				app:layout_constraintTop_toBottomOf="@id/card_header"
+				tools:text="Delhi" />
+			
+			<io.peanutsdk.widget.BaselineGridTextView
+				android:id="@+id/trip_origin_content"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_marginTop="8dp"
+				android:gravity="start"
+				android:textAppearance="@style/TextAppearance.DribbbleShotTitle"
+				android:textColor="@color/text_primary_dark"
+				android:textSize="28sp"
+				app:fontFamily="@font/nunito_semibold"
+				app:layout_constraintEnd_toStartOf="@id/trip_content_img"
+				app:layout_constraintStart_toStartOf="parent"
+				app:layout_constraintTop_toBottomOf="@id/trip_origin_header"
+				tools:text="DEL" />
+			
+			<ImageView
+				android:id="@+id/trip_content_img"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				app:layout_constraintBottom_toBottomOf="parent"
+				app:layout_constraintEnd_toEndOf="parent"
+				app:layout_constraintStart_toStartOf="parent"
+				app:layout_constraintTop_toBottomOf="@id/card_header"
+				app:srcCompat="@drawable/ic_swap"
+				tools:ignore="ContentDescription" />
+			
+			<io.peanutsdk.widget.BaselineGridTextView
+				android:id="@+id/trip_dest_header"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_marginTop="@dimen/spacing_normal"
+				android:gravity="end"
+				android:textAppearance="@style/TextAppearance.DribbbleShotDescription"
+				android:textColor="@color/text_secondary_dark"
+				app:fontFamily="@font/nunito_semibold"
+				app:layout_constraintEnd_toEndOf="parent"
+				app:layout_constraintStart_toEndOf="@id/trip_content_img"
+				app:layout_constraintTop_toBottomOf="@id/card_header"
+				tools:text="New York" />
+			
+			<io.peanutsdk.widget.BaselineGridTextView
+				android:id="@+id/trip_dest_content"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_marginTop="8dp"
+				android:gravity="end"
+				android:textAppearance="@style/TextAppearance.DribbbleShotTitle"
+				android:textColor="@color/text_primary_dark"
+				android:textSize="28sp"
+				app:fontFamily="@font/nunito_semibold"
+				app:layout_constraintEnd_toEndOf="parent"
+				app:layout_constraintStart_toEndOf="@id/trip_content_img"
+				app:layout_constraintTop_toBottomOf="@id/trip_dest_header"
+				tools:text="JFK" />
+		
+		
+		</android.support.constraint.ConstraintLayout>
+		
+		<View
+			android:layout_width="match_parent"
+			android:layout_height="1dp"
+			android:background="@color/mid_grey" />
+		
+		<android.support.constraint.ConstraintLayout
+			android:id="@+id/layout_content_passenger"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:padding="@dimen/padding_normal">
+			
+			<io.peanutsdk.widget.BaselineGridTextView
+				android:id="@+id/passenger_header"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:text="Passenger"
+				android:textColor="@color/text_secondary_dark"
+				android:textSize="18sp"
+				app:fontFamily="@font/nunito_semibold"
+				app:layout_constraintStart_toStartOf="parent"
+				app:layout_constraintTop_toTopOf="parent" />
+			
+			<io.peanutsdk.widget.BaselineGridTextView
+				android:id="@+id/passenger_username"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:text="Owusu Laryea"
+				android:textColor="@color/text_primary_dark"
+				android:textSize="18sp"
+				app:fontFamily="@font/nunito_semibold"
+				app:layout_constraintStart_toStartOf="parent"
+				app:layout_constraintTop_toBottomOf="@id/passenger_header" />
+			
+			<io.peanutsdk.widget.BaselineGridTextView
+				android:id="@+id/seat_header"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:text="Seat Number"
+				android:textColor="@color/text_secondary_dark"
+				android:textSize="18sp"
+				app:fontFamily="@font/nunito_semibold"
+				app:layout_constraintEnd_toEndOf="parent"
+				app:layout_constraintTop_toTopOf="parent" />
+			
+			<io.peanutsdk.widget.BaselineGridTextView
+				android:id="@+id/passenger_seat"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:text="SC12"
+				android:textColor="@color/text_primary_dark"
+				android:textSize="18sp"
+				app:fontFamily="@font/nunito_semibold"
+				app:layout_constraintEnd_toEndOf="parent"
+				app:layout_constraintTop_toBottomOf="@id/seat_header" />
+		
+		</android.support.constraint.ConstraintLayout>
+		
+		<View
+			android:layout_width="match_parent"
+			android:layout_height="1dp"
+			android:background="@color/mid_grey" />
+		
+		<android.support.constraint.ConstraintLayout
+			android:id="@+id/layout_content_time"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:padding="@dimen/padding_normal">
+			
+			<io.peanutsdk.widget.BaselineGridTextView
+				android:id="@+id/time_header"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:text="Time"
+				android:textColor="@color/text_secondary_dark"
+				android:textSize="18sp"
+				app:fontFamily="@font/nunito_semibold"
+				app:layout_constraintStart_toStartOf="parent"
+				app:layout_constraintTop_toTopOf="parent" />
+			
+			<io.peanutsdk.widget.BaselineGridTextView
+				android:id="@+id/trip_time"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:text="08:30am"
+				android:textColor="@color/text_primary_dark"
+				android:textSize="18sp"
+				app:fontFamily="@font/nunito_semibold"
+				app:layout_constraintStart_toStartOf="parent"
+				app:layout_constraintTop_toBottomOf="@id/time_header" />
+			
+			<io.peanutsdk.widget.BaselineGridTextView
+				android:id="@+id/date_header"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:text="Date"
+				android:textColor="@color/text_secondary_dark"
+				android:textSize="18sp"
+				app:fontFamily="@font/nunito_semibold"
+				app:layout_constraintEnd_toEndOf="parent"
+				app:layout_constraintTop_toTopOf="parent" />
+			
+			<io.peanutsdk.widget.BaselineGridTextView
+				android:id="@+id/trip_date"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:text="08 April, 2018"
+				android:textColor="@color/text_primary_dark"
+				android:textSize="18sp"
+				app:fontFamily="@font/nunito_semibold"
+				app:layout_constraintEnd_toEndOf="parent"
+				app:layout_constraintTop_toBottomOf="@id/date_header" />
+		
+		</android.support.constraint.ConstraintLayout>
+		
+		<View
+			android:layout_width="match_parent"
+			android:layout_height="1dp"
+			android:background="@color/mid_grey" />
+		
+		<android.support.constraint.ConstraintLayout
+			android:id="@+id/layout_content_bus_details"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:padding="@dimen/padding_normal">
+			
+			<io.peanutsdk.widget.BaselineGridTextView
+				android:id="@+id/bus_header"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:text="Bus number"
+				android:textColor="@color/text_secondary_dark"
+				android:textSize="18sp"
+				app:fontFamily="@font/nunito_semibold"
+				app:layout_constraintStart_toStartOf="parent"
+				app:layout_constraintTop_toTopOf="parent" />
+			
+			<io.peanutsdk.widget.BaselineGridTextView
+				android:id="@+id/bus_number"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:text="NR-233-18"
+				android:textColor="@color/text_primary_dark"
+				android:textSize="18sp"
+				app:fontFamily="@font/nunito_semibold"
+				app:layout_constraintStart_toStartOf="parent"
+				app:layout_constraintTop_toBottomOf="@id/bus_header" />
+			
+			<io.peanutsdk.widget.BaselineGridTextView
+				android:id="@+id/driver_header"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:text="Driver"
+				android:textColor="@color/text_secondary_dark"
+				android:textSize="18sp"
+				app:fontFamily="@font/nunito_semibold"
+				app:layout_constraintEnd_toEndOf="parent"
+				app:layout_constraintTop_toTopOf="parent" />
+			
+			<io.peanutsdk.widget.BaselineGridTextView
+				android:id="@+id/driver_username"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:text="Ali Sampson"
+				android:textColor="@color/text_primary_dark"
+				android:textSize="18sp"
+				app:fontFamily="@font/nunito_semibold"
+				app:layout_constraintEnd_toEndOf="parent"
+				app:layout_constraintTop_toBottomOf="@id/driver_header" />
+		
+		
+		</android.support.constraint.ConstraintLayout>
+		
+		
+		<Button
+			android:id="@+id/buy_ticket"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_gravity="center_horizontal"
+			android:layout_marginTop="@dimen/spacing_large"
+			android:background="@drawable/button_background"
+			android:drawablePadding="@dimen/spacing_normal"
+			android:drawableStart="@drawable/ic_buy"
+			android:fontFamily="@font/nunito_semibold"
+			android:padding="@dimen/padding_normal"
+			android:text="@string/buy_now"
+			android:textColor="@color/text_primary_light"
+			android:textStyle="bold" />
+	
+	</LinearLayout>
 
 </android.support.constraint.ConstraintLayout>

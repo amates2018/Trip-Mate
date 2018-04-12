@@ -55,4 +55,6 @@
 		passengers</string>
 	<string name="trip_details">Trip details</string>
 	<string name="no_trip_reservations">No trip reservations</string>
+	<string name="purchase_ticket">Purchase bus ticket</string>
+	<string name="buy_now">Buy now</string>
 </resources>

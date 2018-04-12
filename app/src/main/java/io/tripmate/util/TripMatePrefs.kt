@@ -21,6 +21,7 @@ class TripMatePrefs private constructor(private val context: Context) {
 
     private var accessToken: String? = null
     private var userType: String? = null
+    private var payment: String? = null
     private var isTracking: Boolean = false
     private var loginStateListeners: MutableList<LoginStateListener>? = null
 
@@ -49,12 +50,14 @@ class TripMatePrefs private constructor(private val context: Context) {
         db.firestoreSettings = firestoreSettings
 
         accessToken = prefs.getString(KEY_ACCESS_TOKEN, null)
+        payment = prefs.getString(KEY_PAYMENT, null)
         isTracking = prefs.getBoolean(KEY_DRIVER_TRACKING, false)
 
         isLoggedIn = !accessToken.isNullOrEmpty()
         if (isLoggedIn) {
             accessToken = prefs.getString(KEY_ACCESS_TOKEN, null)
             userType = prefs.getString(KEY_USER_TYPE, null)
+            payment = prefs.getString(KEY_PAYMENT, null)
             isTracking = prefs.getBoolean(KEY_DRIVER_TRACKING, false)
         }
 
@@ -74,12 +77,14 @@ class TripMatePrefs private constructor(private val context: Context) {
         if (token.isNullOrEmpty()) return
         this.accessToken = token
         this.userType = userType.name
+        this.payment = token
         isLoggedIn = true
         this.isTracking = false
         //Store locally
         val editor = prefs.edit()
-        editor.putString(KEY_ACCESS_TOKEN, accessToken)
-        editor.putString(KEY_USER_TYPE, userType.name)
+        editor.putString(KEY_ACCESS_TOKEN, this.accessToken)
+        editor.putString(KEY_USER_TYPE, this.userType)
+        editor.putString(KEY_PAYMENT, payment)
         editor.putBoolean(KEY_DRIVER_TRACKING, isTracking)
         editor.apply()
         dispatchLoginEvent()
@@ -92,6 +97,16 @@ class TripMatePrefs private constructor(private val context: Context) {
     fun enableTracking(hasTracker: Boolean) {
         isTracking = hasTracker
         prefs.edit().putBoolean(KEY_DRIVER_TRACKING, hasTracker).apply()
+    }
+
+    fun paymentMethod(): String? {
+        return prefs.getString(KEY_PAYMENT, null)
+    }
+
+    //Set user's payment method
+    fun setPaymentMethod(method: PaymentMethod) {
+        this.payment = method.value
+        prefs.edit().putString(KEY_PAYMENT, method.value).apply()
     }
 
     //todo: update
@@ -157,6 +172,7 @@ class TripMatePrefs private constructor(private val context: Context) {
         private const val KEY_ACCESS_TOKEN = "KEY_ACCESS_TOKEN"
         private const val KEY_USER_TYPE = "KEY_USER_TYPE"
         private const val KEY_DRIVER_TRACKING = "KEY_DRIVER_TRACKING"
+        private const val KEY_PAYMENT = "KEY_PAYMENT"
 
         @SuppressLint("StaticFieldLeak")
         @Volatile

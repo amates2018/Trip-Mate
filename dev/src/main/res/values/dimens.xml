@@ -70,7 +70,7 @@
     <!-- dribbble player -->
     <dimen name="large_avatar_size">100dp</dimen> <!-- 2 * actionBarSize - 2 * avatar_padding -->
     <dimen name="large_avatar_height">160dp</dimen> <!-- large_avatar_margin + large_avatar_size + avatar_margin -->
-    <dimen name="huge_avatar_height">250dp</dimen> <!-- large_avatar_margin + large_avatar_size +
+    <dimen name="huge_avatar_height">180dp</dimen> <!-- large_avatar_margin + large_avatar_size +
     avatar_margin -->
 
     <!-- bottom sheet -->

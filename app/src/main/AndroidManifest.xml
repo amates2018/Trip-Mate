@@ -31,20 +31,6 @@
 			android:name=".ui.SplashActivity"
 			android:screenOrientation="portrait"
 			android:theme="@style/TripMate.FullScreen" />
-		<!--
-            Use an alias in case we want to change the launch activity later without breaking
-			homescreen shortcuts. Note must be defined after the targetActivity
-        -->
-		<activity-alias
-			android:name=".Launcher"
-			android:label="@string/app_name"
-			android:targetActivity=".ui.SplashActivity">
-			<intent-filter>
-				<action android:name="android.intent.action.MAIN" />
-				
-				<category android:name="android.intent.category.LAUNCHER" />
-			</intent-filter>
-		</activity-alias>
 		
 		<activity
 			android:name=".ui.HomeActivity"
@@ -90,6 +76,23 @@
 		<activity
 			android:name=".ui.SearchResultsActivity"
 			android:screenOrientation="portrait" />
+		
+		<!--
+            Use an alias in case we want to change the launch activity later without breaking
+			homescreen shortcuts. Note must be defined after the targetActivity
+        -->
+		<activity-alias
+			android:name=".Launcher"
+			android:label="@string/app_name"
+			android:targetActivity=".ui.SplashActivity">
+			<intent-filter>
+				<action android:name="android.intent.action.MAIN" />
+				
+				<category android:name="android.intent.category.LAUNCHER" />
+			</intent-filter>
+		</activity-alias>
+	
+		
 	</application>
 
 </manifest>

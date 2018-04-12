@@ -149,8 +149,8 @@ class ReservationsActivity : Activity() {
 
             //proceed to buy ticket
             holder.itemView.setOnClickListener({
-                val intent = Intent(this@ReservationsActivity, TicketActivity::class.java)
-                intent.putExtra(TicketActivity.EXTRA_TRIP, trip)
+                val intent = Intent(this@ReservationsActivity, SeatsActivity::class.java)
+                intent.putExtra(SeatsActivity.EXTRA_TRIP_DATA, reservations[position])
                 startActivity(intent)
             })
         }

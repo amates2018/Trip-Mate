@@ -11,14 +11,13 @@ import com.google.firebase.firestore.FirebaseFirestore
 import io.peanutsdk.recyclerview.SlideInItemAnimator
 import io.peanutsdk.util.bindView
 import io.tripmate.R
-import io.tripmate.data.Trip
+import io.tripmate.data.Reservation
 import io.tripmate.util.*
 
 /**
  * For seat selection and reservation
  */
 class SeatsActivity : Activity(), OnSeatSelected {
-
 
     private val container: ViewGroup by bindView(R.id.container)
     private val grid: RecyclerView by bindView(R.id.seats_grid)
@@ -69,20 +68,21 @@ class SeatsActivity : Activity(), OnSeatSelected {
         //Get intent and get data
         val intent = intent
         if (intent.hasExtra(EXTRA_TRIP_DATA)) {
-            val trip = intent.getParcelableExtra<Trip>(EXTRA_TRIP_DATA)
-            bindTrip(trip)
+            val reservation = intent.getParcelableExtra<Reservation>(EXTRA_TRIP_DATA)
+            bindTrip(reservation)
         }
     }
 
-    private fun bindTrip(trip: Trip?) {
-        if (trip == null) return
+    private fun bindTrip(reservation: Reservation?) {
+        if (reservation == null) return
 
         //Get trip bus
-        val bus = trip.bus
+        val trip = reservation.trip
+        val bus = trip?.bus
 
         //Add details
         busName.text = bus?.type
-        tripDetails.text = String.format("%s - %s", trip.origin, trip.destination)
+        tripDetails.text = String.format("%s - %s", trip?.origin, trip?.destination)
 
         //Get number of seats for the bus
         val numSeats = bus?.seats?.size

@@ -70,7 +70,7 @@ public class AnimUtils {
 	/**
 	 * A delegate for creating a {@link Property} of <code>int</code> type.
 	 */
-	public static abstract class IntProp<T> {
+	public abstract static class IntProp<T> {
 		
 		public final String name;
 		
@@ -87,7 +87,7 @@ public class AnimUtils {
 	 * <code>int</code> but it was only made public in API24, so wrap the impl in our own type
 	 * and conditionally create the appropriate type, delegating the implementation.
 	 */
-	public static <T> Property<T, Integer> createIntProperty(final IntProp<T> impl) {
+	public static <T> Property<T, Integer> createIntProperty(IntProp<T> impl) {
 		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
 			return new IntProperty<T>(impl.name) {
 				@Override
@@ -118,7 +118,7 @@ public class AnimUtils {
 	/**
 	 * A delegate for creating a {@link Property} of <code>float</code> type.
 	 */
-	public static abstract class FloatProp<T> {
+	public abstract static class FloatProp<T> {
 		
 		public final String name;
 		
@@ -135,7 +135,7 @@ public class AnimUtils {
 	 * <code>float</code> but it was only made public in API24, so wrap the impl in our own type
 	 * and conditionally create the appropriate type, delegating the implementation.
 	 */
-	public static <T> Property<T, Float> createFloatProperty(final FloatProp<T> impl) {
+	public static <T> Property<T, Float> createFloatProperty(FloatProp<T> impl) {
 		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
 			return new FloatProperty<T>(impl.name) {
 				@Override
@@ -165,7 +165,6 @@ public class AnimUtils {
 	
 	/**
 	 * https://halfthought.wordpress.com/2014/11/07/reveal-transition/
-	 * <p/>
 	 * Interrupting Activity transitions can yield an OperationNotSupportedException when the
 	 * transition tries to pause the animator. Yikes! We can fix this by wrapping the Animator:
 	 */

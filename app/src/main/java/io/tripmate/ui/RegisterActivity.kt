@@ -193,6 +193,10 @@ class RegisterActivity : Activity() {
                     .addOnCompleteListener(this@RegisterActivity, { task ->
                         if (task.isSuccessful) {
                             if (loading.isShowing) loading.dismiss()
+                            //Set payment option offline
+                            prefs.setPaymentMethod(PaymentMethod.valueOf(method.text.toString()))
+
+                            //Navigate user to home screen
                             val intent = Intent(this@RegisterActivity, HomeActivity::class.java)
                             intent.putExtra(HomeActivity.EXTRA_USER, passenger)
                             startActivity(intent)
@@ -215,6 +219,10 @@ class RegisterActivity : Activity() {
                     .addOnCompleteListener(this@RegisterActivity, { task ->
                         if (task.isSuccessful) {
                             if (loading.isShowing) loading.dismiss()
+                            //Set tracking state
+                            prefs.enableTracking(false)
+
+                            //
                             val intent = Intent(this@RegisterActivity, HomeActivity::class.java)
                             intent.putExtra(HomeActivity.EXTRA_USER, driver)
                             startActivity(intent)
