@@ -2,6 +2,7 @@
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
 	xmlns:app="http://schemas.android.com/apk/res-auto"
 	xmlns:tools="http://schemas.android.com/tools"
+	android:id="@+id/container"
 	android:layout_width="match_parent"
 	android:layout_height="match_parent"
 	android:background="@color/background_super_dark"
@@ -13,13 +14,20 @@
 		app:layout_constraintStart_toStartOf="parent"
 		app:layout_constraintTop_toTopOf="parent" />
 	
+	<View
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		android:layout_marginTop="?android:actionBarSize"
+		android:background="@color/background_light" />
+	
 	<LinearLayout
-		android:id="@+id/container"
+		android:id="@+id/content"
 		android:layout_width="match_parent"
 		android:layout_height="match_parent"
 		android:layout_marginTop="?android:actionBarSize"
 		android:background="@color/background_light"
-		android:orientation="vertical">
+		android:orientation="vertical"
+		android:visibility="gone">
 		
 		<android.support.v4.widget.SwipeRefreshLayout
 			android:id="@+id/swipe_reservations"
@@ -36,5 +44,22 @@
 		</android.support.v4.widget.SwipeRefreshLayout>
 	
 	</LinearLayout>
+	
+	<io.peanutsdk.widget.BaselineGridTextView
+		android:id="@+id/no_reservations"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_marginTop="?android:actionBarSize"
+		android:drawableTop="@drawable/ic_no_reservation"
+		android:gravity="center_horizontal"
+		android:drawablePadding="@dimen/padding_normal"
+		android:text="@string/no_trip_reservations"
+		android:textColor="@color/dark_icon"
+		android:textSize="18sp"
+		app:fontFamily="@font/nunito_semibold"
+		app:layout_constraintBottom_toBottomOf="parent"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toTopOf="parent" />
 
 </android.support.constraint.ConstraintLayout>

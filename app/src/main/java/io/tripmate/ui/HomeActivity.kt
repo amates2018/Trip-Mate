@@ -195,6 +195,8 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     override fun onPrepareOptionsMenu(menu: Menu?): Boolean {
         val login = menu?.findItem(R.id.action_login)
+        val about = menu?.findItem(R.id.action_about)
+        about?.isVisible = false
         login?.setTitle(if (prefs.isLoggedIn) R.string.logout else R.string.login)
         return true
     }

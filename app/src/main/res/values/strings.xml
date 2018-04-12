@@ -54,4 +54,5 @@
 	<string name="v_content_text">Tap here to enable us track your current trip with your
 		passengers</string>
 	<string name="trip_details">Trip details</string>
+	<string name="no_trip_reservations">No trip reservations</string>
 </resources>
