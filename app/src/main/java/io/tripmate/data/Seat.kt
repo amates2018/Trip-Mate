@@ -25,7 +25,7 @@ class Seat : SearchableItem, Parcelable {
 
     constructor()
 
-    constructor(key: String, booking: Long, bus: Bus, isAvailable: Boolean, uid: String) {
+    constructor(key: String, booking: Long, bus: Bus?, isAvailable: Boolean, uid: String) {
         this.key = key
         this.booking = booking
         this.bus = bus

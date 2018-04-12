@@ -1,5 +1,6 @@
 package io.tripmate.ui
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.ActivityOptions
 import android.content.Intent
@@ -7,13 +8,17 @@ import android.os.Bundle
 import android.support.design.widget.Snackbar
 import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.RecyclerView
+import android.text.format.DateUtils
 import android.view.ViewGroup
 import android.widget.TextView
+import android.widget.Toast
+import com.afollestad.materialdialogs.MaterialDialog
 import com.google.firebase.firestore.FirebaseFirestore
 import io.peanutsdk.recyclerview.SlideInItemAnimator
 import io.peanutsdk.util.bindView
 import io.tripmate.R
 import io.tripmate.data.Reservation
+import io.tripmate.data.Seat
 import io.tripmate.util.*
 
 /**
@@ -30,9 +35,8 @@ class SeatsActivity : Activity(), OnSeatSelected {
     private val booking: TextView by bindView(R.id.booking_date)
     private val price: TextView by bindView(R.id.trip_price)
 
-    private var count: Int = 0
-
     private lateinit var prefs: TripMatePrefs
+    private lateinit var loading: MaterialDialog
     private lateinit var db: FirebaseFirestore
     private lateinit var adapter: BusSeatAdapter
 
@@ -42,6 +46,7 @@ class SeatsActivity : Activity(), OnSeatSelected {
 
         //Init shared preferences
         prefs = TripMatePrefs[this]
+        loading = TripMateUtils.getDialog(this@SeatsActivity)
 
         //Init database reference
         db = prefs.db
@@ -75,12 +80,22 @@ class SeatsActivity : Activity(), OnSeatSelected {
         }
     }
 
+    @SuppressLint("SetTextI18n")
     private fun bindTrip(reservation: Reservation?) {
         if (reservation == null) return
 
         //Get trip bus
         val trip = reservation.trip
         val bus = trip?.bus
+
+        //Set price
+        price.text = "GHC ${trip?.price}"
+        if (reservation.timestamp != null) {
+            booking.text = "Booking date: ${DateUtils.getRelativeTimeSpanString(reservation.timestamp!!.time, System
+                    .currentTimeMillis(), DateUtils.SECOND_IN_MILLIS)}"
+        } else {
+            booking.visibility = ViewGroup.INVISIBLE
+        }
 
         //Add details
         busName.text = bus?.type
@@ -107,6 +122,31 @@ class SeatsActivity : Activity(), OnSeatSelected {
         //Add animation to next activity
         val options = ActivityOptions.makeSceneTransitionAnimation(this@SeatsActivity)
         startActivityForResult(intent, CODE_TICKET_PURCHASE, options.toBundle())
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        if (resultCode == RESULT_OK) {
+            when (requestCode) {
+                CODE_TICKET_PURCHASE -> {
+                    loading.builder.cancelable(false)
+                    loading.show()
+                    val reservation = intent.getParcelableExtra<Reservation>(EXTRA_TRIP_DATA)
+                    val document = prefs.db.collection(TripMateUtils.SEAT_REF).document()
+                    val seat = Seat(document.id, System.currentTimeMillis(), reservation?.trip?.bus, false, prefs.getAccessToken())
+                    document.set(seat).addOnCompleteListener(this@SeatsActivity, { task ->
+                        if (task.isSuccessful) {
+                            loading.dismiss()
+                            Toast.makeText(applicationContext, "You have purchased your seat",
+                                    Toast.LENGTH_LONG).show()
+                            finishAfterTransition()
+                        }
+                    }).addOnFailureListener(this@SeatsActivity, { exception ->
+                        Toast.makeText(applicationContext, exception.localizedMessage, Toast.LENGTH_LONG)
+                                .show()
+                    })
+                }
+            }
+        }
     }
 
     companion object {

@@ -64,4 +64,5 @@
 	<string name="seat_number">Seat Number</string>
 	<string name="passenger">Passenger</string>
 	<string name="title_activity_maps">Map</string>
+	<string name="reservations">Reservations</string>
 </resources>

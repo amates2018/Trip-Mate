@@ -11,6 +11,7 @@ import android.transition.TransitionManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageButton
 import android.widget.TextView
 import com.afollestad.materialdialogs.MaterialDialog
 import com.bumptech.glide.load.engine.DiskCacheStrategy
@@ -55,6 +56,14 @@ class ReservationsActivity : Activity() {
         //Init prefs
         prefs = TripMatePrefs[this@ReservationsActivity]
         loading = TripMateUtils.getDialog(applicationContext)
+
+        //Toolbar setup
+        val back = toolbar.findViewById<ImageButton>(R.id.toolbar_back)
+        val title = toolbar.findViewById<TextView>(R.id.toolbar_text)
+        val menu = toolbar.findViewById<ImageButton>(R.id.toolbar_menu)
+        back.setOnClickListener({ onBackPressed() })
+        menu.visibility = View.GONE
+        title.text = getString(R.string.reservations)
 
         //Setup grid
         dataManager = object : ReservationsDataManager(this@ReservationsActivity) {
@@ -155,6 +164,8 @@ class ReservationsActivity : Activity() {
             })
         }
 
+        fun clear() = reservations.clear()
+
         //Add new data from server
         fun addAndResort(newReservations: List<Reservation>) {
             if (newReservations.isEmpty()) return
@@ -173,6 +184,12 @@ class ReservationsActivity : Activity() {
                 }
             }
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        adapter.clear()
+        dataManager.loadTripReservations(prefs.getAccessToken())
     }
 
     internal inner class ReservationsViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView), Divided {
