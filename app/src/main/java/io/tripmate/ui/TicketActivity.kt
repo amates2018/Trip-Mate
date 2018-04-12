@@ -185,7 +185,7 @@ class TicketActivity : Activity() {
                 .itemsCallback({ dialog, _, _, text ->
                     dialog.dismiss()
                     doPayment(text)
-                    prefs.setPaymentMethod(PaymentMethod.valueOf(text.toString()))
+                    prefs.setPaymentMethod(text.toString())
                 })
                 .build().show()
     }

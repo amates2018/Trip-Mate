@@ -92,25 +92,34 @@
 		</android.support.design.widget.TextInputLayout>
 		
 		<android.support.design.widget.TextInputLayout
-			android:id="@+id/payment_content_label"
+			android:id="@+id/bus_content_label"
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
 			android:layout_gravity="center_horizontal"
 			android:visibility="visible"
 			app:hintTextAppearance="@style/TextAppearance.FloatLabelHint">
 			
-			<AutoCompleteTextView
-				android:id="@+id/payment_content"
+			<android.support.design.widget.TextInputEditText
+				android:id="@+id/bus_content"
 				android:layout_width="match_parent"
 				android:layout_height="wrap_content"
 				android:fontFamily="@font/nunito_semibold"
-				android:hint="@string/payment_method"
+				android:hint="@string/bus_number"
 				android:imeOptions="actionDone"
 				android:inputType="textCapWords"
 				android:textColor="@color/text_secondary_dark"
-				tools:text="MTN Mobile Money" />
+				tools:text="GT-2398-K" />
 		
 		</android.support.design.widget.TextInputLayout>
+		
+		<Spinner
+			android:id="@+id/payment_content"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:layout_marginTop="@dimen/spacing_normal"
+			android:padding="@dimen/padding_normal"
+			android:prompt="@string/payment_method"
+			android:spinnerMode="dropdown" />
 		
 		<Button
 			android:id="@+id/register_button"

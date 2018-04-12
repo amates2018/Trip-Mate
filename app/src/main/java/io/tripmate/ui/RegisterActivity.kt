@@ -12,14 +12,12 @@ import android.support.design.widget.Snackbar
 import android.support.design.widget.TextInputEditText
 import android.support.design.widget.TextInputLayout
 import android.support.v4.content.ContextCompat
-import android.text.Editable
-import android.text.TextWatcher
 import android.transition.TransitionManager
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
-import android.widget.AutoCompleteTextView
 import android.widget.Button
+import android.widget.Spinner
 import android.widget.Toast
 import com.afollestad.materialdialogs.MaterialDialog
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions.withCrossFade
@@ -40,8 +38,9 @@ class RegisterActivity : Activity() {
     private val avatar: ForegroundImageView by bindView(R.id.user_avatar)
     private val username: TextInputEditText by bindView(R.id.username_content)
     private val phone: TextInputEditText by bindView(R.id.phone_content)
-    private val method: AutoCompleteTextView by bindView(R.id.payment_content)
-    private val methodLabel: TextInputLayout by bindView(R.id.payment_content_label)
+    private val method: Spinner by bindView(R.id.payment_content)
+    private val busLabel: TextInputLayout by bindView(R.id.bus_content_label)
+    private val busNumber: TextInputEditText by bindView(R.id.bus_content)
     private val register: Button by bindView(R.id.register_button)
 
     private lateinit var prefs: TripMatePrefs
@@ -79,45 +78,18 @@ class RegisterActivity : Activity() {
 
         //Adapter for dropdown
         val adapter = ArrayAdapter<String>(this@RegisterActivity, android.R.layout.simple_list_item_1, paymentMethods)
-        method.setAdapter(adapter)
+        method.adapter = adapter
 
-        if (method.hasFocus()) {
-            method.showDropDown()
-        }
-
-        method.addTextChangedListener(object : TextWatcher {
-            override fun afterTextChanged(s: Editable?) {}
-
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
-
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                method.showDropDown()
-            }
-        })
     }
 
     private fun bindUser() {
         if (user is Passenger) {
             TransitionManager.beginDelayedTransition(container)
-            methodLabel.visibility = View.VISIBLE
+            busLabel.visibility = View.GONE
             setupAutoComplete()
         } else {
             TransitionManager.beginDelayedTransition(container)
-            methodLabel.visibility = View.GONE
-
-            //Set hint
-            methodLabel.hint = BUS_NUMBER_HINT
-            method.hint = BUS_NUMBER_HINT
-
-            //Watches for changes in user input
-            //todo: Add in next update
-            method.addTextChangedListener(object : TextWatcher {
-                override fun afterTextChanged(s: Editable?) {}
-
-                override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
-
-                override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
-            })
+            busLabel.visibility = View.VISIBLE
         }
 
         username.setText(user.email)
@@ -128,7 +100,7 @@ class RegisterActivity : Activity() {
         //Get values
         val usernameText = username.text.toString()
         val phoneText = phone.text.toString()
-        val paymentMethod = method.text.toString()
+        val _bus_number = busNumber.text.toString()
 
         when {
         //Incorrect username format?
@@ -144,9 +116,9 @@ class RegisterActivity : Activity() {
             }
 
         //Incorrect payment method?
-            methodLabel.visibility == View.VISIBLE && paymentMethod.isEmpty() -> {
-                method.error = getString(R.string.prompt_method_error)
-                method.requestFocus()
+            busLabel.visibility == View.VISIBLE && _bus_number.isEmpty() -> {
+                showFailed("Enter your bus number please")
+                busNumber.requestFocus()
             }
 
         //No internet?
@@ -173,7 +145,7 @@ class RegisterActivity : Activity() {
     }
 
     private fun hasProperBusNumber(): Boolean {
-        val busNumber = method.text.toString()
+        val busNumber = method.selectedItem.toString()
         //todo: add in update
         return false
     }
@@ -184,7 +156,7 @@ class RegisterActivity : Activity() {
             //Cast user to passenger class
             val newUser = user as Passenger
             val passenger = Passenger(newUser.key, username.text.toString(), newUser.email, phone.text.toString(),
-                    method.text.toString(), Profile(imageUri, imageUri, imageUri), newUser.location)
+                    method.selectedItem.toString(), Profile(imageUri, imageUri, imageUri), newUser.location)
 
             //Upload Passenger
             prefs.db.collection(TripMateUtils.USER_REF)
@@ -194,7 +166,7 @@ class RegisterActivity : Activity() {
                         if (task.isSuccessful) {
                             if (loading.isShowing) loading.dismiss()
                             //Set payment option offline
-                            prefs.setPaymentMethod(PaymentMethod.valueOf(method.text.toString()))
+                            prefs.setPaymentMethod(method.selectedItem.toString())
 
                             //Navigate user to home screen
                             val intent = Intent(this@RegisterActivity, HomeActivity::class.java)
@@ -209,7 +181,7 @@ class RegisterActivity : Activity() {
             //Cast user to driver class
             val newUser = user as Driver
             val driver = Driver(newUser.key, newUser.username, newUser.email, phone.text.toString(),
-                    Profile(imageUri, imageUri, imageUri), null, method.text.toString(),
+                    Profile(imageUri, imageUri, imageUri), null, busNumber.text.toString(),
                     null, null)
 
             //Upload Driver
@@ -310,7 +282,6 @@ class RegisterActivity : Activity() {
 
     companion object {
         const val EXTRA_USER = "EXTRA_USER"
-        const val BUS_NUMBER_HINT = "Bus number (eg: GT-1928-18)"
         private const val STORAGE_REQ_CODE = 17
         private const val GALLERY_REQ_CODE = 18
     }

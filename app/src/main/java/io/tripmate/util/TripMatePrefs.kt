@@ -104,9 +104,9 @@ class TripMatePrefs private constructor(private val context: Context) {
     }
 
     //Set user's payment method
-    fun setPaymentMethod(method: PaymentMethod) {
-        this.payment = method.value
-        prefs.edit().putString(KEY_PAYMENT, method.value).apply()
+    fun setPaymentMethod(method: String) {
+        this.payment = method
+        prefs.edit().putString(KEY_PAYMENT, method).apply()
     }
 
     //todo: update
