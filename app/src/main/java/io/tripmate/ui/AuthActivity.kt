@@ -178,6 +178,8 @@ class AuthActivity : Activity() {
                                             startActivity(intent)
                                             finish()
                                         }
+                                    }).addOnFailureListener(this@AuthActivity, { exception ->
+                                        showLoginFailed(exception.localizedMessage)
                                     })
                         } else {
                             //User is a passenger
@@ -193,10 +195,14 @@ class AuthActivity : Activity() {
                                             startActivity(intent)
                                             finish()
                                         }
+                                    }).addOnFailureListener(this@AuthActivity, { exception ->
+                                        showLoginFailed(exception.localizedMessage)
                                     })
                         }
 
                     }
+                }).addOnFailureListener(this, { exception ->
+                    showLoginFailed(exception.localizedMessage)
                 })
     }
 

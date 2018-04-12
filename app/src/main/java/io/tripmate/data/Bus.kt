@@ -13,7 +13,7 @@ class Bus : SearchableItem {
     override var type: String? = null
     var image: String? = null
     var terminalKey: String? = null
-    var seats: List<Seat>? = null
+    var seats: Int = 25
 
     constructor(parcel: Parcel) : this() {
         key = parcel.readString()
@@ -21,13 +21,13 @@ class Bus : SearchableItem {
         type = parcel.readString()
         image = parcel.readString()
         terminalKey = parcel.readString()
-        seats = parcel.createTypedArrayList(Seat)
+        seats = parcel.readInt()
     }
 
     constructor()
 
     constructor(key: String, number: String, type: String, image: String,
-                terminalKey: String, seats: List<Seat> = emptyList()) {
+                terminalKey: String, seats: Int = 55) {
         this.key = key
         this.number = number
         this.type = type
@@ -42,7 +42,7 @@ class Bus : SearchableItem {
         parcel.writeString(type)
         parcel.writeString(image)
         parcel.writeString(terminalKey)
-        parcel.writeTypedList(seats)
+        parcel.writeInt(seats)
     }
 
     override fun describeContents(): Int {

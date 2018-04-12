@@ -1,6 +1,8 @@
 package io.tripmate.ui
 
 import android.app.Activity
+import android.app.ActivityOptions
+import android.content.Intent
 import android.os.Bundle
 import android.support.design.widget.Snackbar
 import android.support.v7.widget.GridLayoutManager
@@ -85,7 +87,7 @@ class SeatsActivity : Activity(), OnSeatSelected {
         tripDetails.text = String.format("%s - %s", trip?.origin, trip?.destination)
 
         //Get number of seats for the bus
-        val numSeats = bus?.seats?.size
+        val numSeats = bus?.seats
 
         if (numSeats != null && numSeats > 0) {
             //Show number of seats as message for now
@@ -95,10 +97,20 @@ class SeatsActivity : Activity(), OnSeatSelected {
 
     override fun onSeatSelected(position: Int) {
         //Increase count by the position selected
-        count += position
+        val seatNumber = TripMateUtils.generatedSeatNumber(position)
+        val intent = Intent(this@SeatsActivity, TicketActivity::class.java)
+
+        //Add intent data
+        intent.putExtra(TicketActivity.EXTRA_RESERVATION, intent.getParcelableExtra<Reservation>(EXTRA_TRIP_DATA))
+        intent.putExtra(TicketActivity.EXTRA_SEAT_NUMBER, seatNumber)
+
+        //Add animation to next activity
+        val options = ActivityOptions.makeSceneTransitionAnimation(this@SeatsActivity)
+        startActivityForResult(intent, CODE_TICKET_PURCHASE, options.toBundle())
     }
 
     companion object {
         const val EXTRA_TRIP_DATA = "EXTRA_TRIP_DATA"
+        const val CODE_TICKET_PURCHASE = 7
     }
 }

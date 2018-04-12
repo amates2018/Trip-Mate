@@ -23,7 +23,7 @@ class Seat : SearchableItem, Parcelable {
         uid = parcel.readString()
     }
 
-    constructor() {}
+    constructor()
 
     constructor(key: String, booking: Long, bus: Bus, isAvailable: Boolean, uid: String) {
         this.key = key

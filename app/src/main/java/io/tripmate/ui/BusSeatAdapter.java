@@ -20,7 +20,6 @@ import io.tripmate.util.SelectableAdapter;
 
 /**
  * Project : trip-mate
- * Created by Dennis Bilson on Mon at 10:16 AM.
  * Package name : io.tripmate.ui
  */
 public class BusSeatAdapter extends SelectableAdapter<RecyclerView.ViewHolder> {
@@ -62,7 +61,6 @@ public class BusSeatAdapter extends SelectableAdapter<RecyclerView.ViewHolder> {
 		}
 		
 	}
-	
 	
 	private final OnSeatSelected mOnSeatSelected;
 	private final Context mContext;

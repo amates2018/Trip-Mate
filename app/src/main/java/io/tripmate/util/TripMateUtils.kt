@@ -32,10 +32,10 @@ object TripMateUtils {
     }
 
     //generates a random seat number for the user
-    fun generatedSeatNumber(): CharSequence? {
+    fun generatedSeatNumber(number: Int = 2): CharSequence? {
         val seatNumber: CharSequence
         val random = Random(5)
-        seatNumber = "SC${random.nextInt(2)}"
+        seatNumber = "SC${random.nextInt(number)}"
         return seatNumber
     }
 }

@@ -57,4 +57,10 @@
 	<string name="no_trip_reservations">No trip reservations</string>
 	<string name="purchase_ticket">Purchase bus ticket</string>
 	<string name="buy_now">Buy now</string>
+	<string name="driver">Driver</string>
+	<string name="bus_number">Bus number</string>
+	<string name="date">Date</string>
+	<string name="time">Time</string>
+	<string name="seat_number">Seat Number</string>
+	<string name="passenger">Passenger</string>
 </resources>

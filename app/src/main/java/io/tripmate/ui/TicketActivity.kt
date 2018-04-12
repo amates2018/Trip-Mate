@@ -10,6 +10,7 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageButton
 import android.widget.TextView
+import android.widget.Toast
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.Theme
 import io.peanutsdk.util.bindView
@@ -101,18 +102,21 @@ class TicketActivity : Activity() {
 
         //Passenger details
         pContent.text = passenger?.username
-        sContent.text = TripMateUtils.generatedSeatNumber()
+        sContent.text = intent.getStringExtra(EXTRA_SEAT_NUMBER)
 
         //Trip details
         tTime.text = trip?.duration.toString() + " hrs"
         if (timestamp != null) {
             tDate.text = DateUtils.getRelativeTimeSpanString(timestamp.time, System
-                    .currentTimeMillis(), DateUtils.MINUTE_IN_MILLIS)
+                    .currentTimeMillis(), DateUtils.SECOND_IN_MILLIS)
         }
 
         //Bus & driver details
         busNumber.text = trip?.bus?.number
         driverUsername.text = trip?.driver?.username
+
+        //Set buy button text
+        buy.text = "${getString(R.string.buy_now)} for GHC${trip?.price}"
 
         buy.setOnClickListener({
             if (prefs.isLoggedIn) {
@@ -129,13 +133,41 @@ class TicketActivity : Activity() {
 
         //Restrict users to use only M TN Mobile Money for now
         if (paymentMethod == PaymentMethod.MTN_MOMO.value) {
-
+            loading.builder.cancelable(false).show()
+            deleteTrip()
         } else {
             showSnackbar("Only MTN Mobile money is currently supported. please choose MTN from " +
                     "the options list")
             showPaymentDialog()
         }
 
+    }
+
+    private fun deleteTrip() {
+        //Delete reservation
+        val reservation = intent.getParcelableExtra<Reservation>(EXTRA_RESERVATION)
+        if (reservation != null) {
+            prefs.db.collection(TripMateUtils.RESERVATION_REF)
+                    .document(reservation.key!!)
+                    .delete()
+                    .addOnFailureListener(this@TicketActivity, { exception ->
+                        showSnackbar(exception.localizedMessage)
+                    }).addOnCompleteListener(this@TicketActivity, { task ->
+                        if (task.isSuccessful) {
+                            Toast.makeText(applicationContext, "Your purchase was successful", Toast.LENGTH_LONG)
+                                    .show()
+                            setResultAndFinish()
+                        } else {
+                            showSnackbar("Unable to remove trip reservation")
+                            setResultAndFinish()
+                        }
+                    })
+        }
+    }
+
+    private fun setResultAndFinish() {
+        setResult(SeatsActivity.CODE_TICKET_PURCHASE)
+        finishAfterTransition()
     }
 
     //Show dialog for user to select a payment method
@@ -160,10 +192,12 @@ class TicketActivity : Activity() {
 
 
     private fun showSnackbar(s: String) {
+        if (loading.isShowing) loading.dismiss()
         Snackbar.make(container, s, Snackbar.LENGTH_LONG).show()
     }
 
     companion object {
         const val EXTRA_RESERVATION = "EXTRA_RESERVATION"
+        const val EXTRA_SEAT_NUMBER = "EXTRA_SEAT_NUMBER"
     }
 }
